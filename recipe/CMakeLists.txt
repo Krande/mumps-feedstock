@@ -47,6 +47,15 @@ if(WITH_MPI)
   endif()
 endif()
 
+# Intel Fortran (ifx) on Windows: force lowercase+underscore naming to match
+# the -DAdd_ convention, and enable debug symbols.
+if(CMAKE_Fortran_COMPILER_ID STREQUAL "IntelLLVM" AND WIN32)
+  set(CMAKE_Fortran_FLAGS "${CMAKE_Fortran_FLAGS} /names:lowercase /assume:underscore")
+  set(CMAKE_Fortran_FLAGS "${CMAKE_Fortran_FLAGS} /Z7 /traceback")
+  set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} /DEBUG")
+  set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} /DEBUG")
+endif()
+
 include_directories(
   ${MUMPS_SOURCE_DIR}/include
   ${MUMPS_SOURCE_DIR}/src

@@ -5,4 +5,32 @@ mpi:
 
 scotch_intsize:
   - "32"
-  - "64"  # [not win]
+  - "64"
+
+# Windows has two Fortran compiler variants:
+#   flang  + netlib BLAS (conda-forge default)
+#   ifx    + MKL BLAS    (needed for code_aster ABI compatibility)
+# zip_keys ensures fortran_compiler and BLAS are correlated.
+zip_keys:  # [win]
+  -   # [win]
+    - fortran_compiler  # [win]
+    - fortran_compiler_version  # [win]
+    - libblas  # [win]
+    - liblapack  # [win]
+    - scotch_intsize  # [win]
+
+fortran_compiler:  # [win]
+  - flang  # [win]
+  - ifx  # [win]
+
+fortran_compiler_version:  # [win]
+  - "21"  # [win]
+  - "2025.*"  # [win]
+
+libblas:  # [win]
+  - 3.9.* *netlib  # [win]
+  - 3.9.* *mkl  # [win]
+
+liblapack:  # [win]
+  - 3.9.* *netlib  # [win]
+  - 3.9.* *mkl  # [win]

@@ -246,10 +246,17 @@ Current build status
                 </a>
               </td>
             </tr><tr>
-              <td>win_64</td>
+              <td>win_64_fortran_compilerflangfortran_compiler_version21libblas3.9.___netlibliblapack3.9.___netlib</td>
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=653&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/mumps-feedstock?branchName=main&jobName=win&configuration=win%20win_64_" alt="variant">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/mumps-feedstock?branchName=main&jobName=win&configuration=win%20win_64_fortran_compilerflangfortran_compiler_version21libblas3.9.___netlibliblapack3.9.___netlib" alt="variant">
+                </a>
+              </td>
+            </tr><tr>
+              <td>win_64_fortran_compilerifxfortran_compiler_version2025._libblas3.9.___mklliblapack3.9.___mkl</td>
+              <td>
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=653&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/mumps-feedstock?branchName=main&jobName=win&configuration=win%20win_64_fortran_compilerifxfortran_compiler_version2025._libblas3.9.___mklliblapack3.9.___mkl" alt="variant">
                 </a>
               </td>
             </tr>

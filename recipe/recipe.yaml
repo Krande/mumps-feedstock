@@ -15,7 +15,7 @@ source:
     - ifdef-openmp.patch
 
 build:
-  number: 2
+  number: 6
 
 outputs:
   - package:
@@ -76,9 +76,14 @@ outputs:
             - metis
             - libscotch
             - libscotch * int${{ scotch_intsize }}_*
-          else:
+        # flang needs LLVM OpenMP runtime; ifx needs MKL headers/libs
+        - if: win and fortran_compiler == 'flang'
+          then:
             - llvm-openmp
             - llvm-openmp-fortran
+        - if: win and fortran_compiler == 'ifx'
+          then:
+            - mkl-devel
       run:
         - if: not win
           then:

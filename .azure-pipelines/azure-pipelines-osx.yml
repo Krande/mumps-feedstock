@@ -5,57 +5,69 @@
 jobs:
 - job: osx
   pool:
-    vmImage: macOS-15
+    vmImage: $(VMIMAGE)
   strategy:
     matrix:
       osx_64_mpimpichscotch_intsize32:
         CONFIG: osx_64_mpimpichscotch_intsize32
         UPLOAD_PACKAGES: 'True'
         SHORT_CONFIG: osx_64_mpimpichscotch_intsize32
+        VMIMAGE: macOS-15
       osx_64_mpimpichscotch_intsize64:
         CONFIG: osx_64_mpimpichscotch_intsize64
         UPLOAD_PACKAGES: 'True'
         SHORT_CONFIG: osx_64_mpimpichscotch_intsize64
+        VMIMAGE: macOS-15
       osx_64_mpinompiscotch_intsize32:
         CONFIG: osx_64_mpinompiscotch_intsize32
         UPLOAD_PACKAGES: 'True'
         SHORT_CONFIG: osx_64_mpinompiscotch_intsize32
+        VMIMAGE: macOS-15
       osx_64_mpinompiscotch_intsize64:
         CONFIG: osx_64_mpinompiscotch_intsize64
         UPLOAD_PACKAGES: 'True'
         SHORT_CONFIG: osx_64_mpinompiscotch_intsize64
+        VMIMAGE: macOS-15
       osx_64_mpiopenmpiscotch_intsize32:
         CONFIG: osx_64_mpiopenmpiscotch_intsize32
         UPLOAD_PACKAGES: 'True'
         SHORT_CONFIG: osx_64_mpiopenmpiscotch_intsize32
+        VMIMAGE: macOS-15
       osx_64_mpiopenmpiscotch_intsize64:
         CONFIG: osx_64_mpiopenmpiscotch_intsize64
         UPLOAD_PACKAGES: 'True'
         SHORT_CONFIG: osx_64_mpiopenmpiscotch_intsize64
+        VMIMAGE: macOS-15
       osx_arm64_mpimpichscotch_intsize32:
         CONFIG: osx_arm64_mpimpichscotch_intsize32
         UPLOAD_PACKAGES: 'True'
         SHORT_CONFIG: osx_arm64_mpimpichscotch_intsize32
+        VMIMAGE: macOS-15
       osx_arm64_mpimpichscotch_intsize64:
         CONFIG: osx_arm64_mpimpichscotch_intsize64
         UPLOAD_PACKAGES: 'True'
         SHORT_CONFIG: osx_arm64_mpimpichscotch_intsize64
+        VMIMAGE: macOS-15
       osx_arm64_mpinompiscotch_intsize32:
         CONFIG: osx_arm64_mpinompiscotch_intsize32
         UPLOAD_PACKAGES: 'True'
         SHORT_CONFIG: osx_arm64_mpinompiscotch_intsize32
+        VMIMAGE: macOS-15
       osx_arm64_mpinompiscotch_intsize64:
         CONFIG: osx_arm64_mpinompiscotch_intsize64
         UPLOAD_PACKAGES: 'True'
         SHORT_CONFIG: osx_arm64_mpinompiscotch_intsize64
+        VMIMAGE: macOS-15
       osx_arm64_mpiopenmpiscotch_intsize32:
         CONFIG: osx_arm64_mpiopenmpiscotch_intsize32
         UPLOAD_PACKAGES: 'True'
         SHORT_CONFIG: osx_arm64_mpiopenmpiscotch_intsize32
+        VMIMAGE: macOS-15
       osx_arm64_mpiopenmpiscotch_intsize64:
         CONFIG: osx_arm64_mpiopenmpiscotch_intsize64
         UPLOAD_PACKAGES: 'True'
         SHORT_CONFIG: osx_arm64_mpiopenmpiscotch_intsize64
+        VMIMAGE: macOS-15
   timeoutInMinutes: 360
   variables: {}
 

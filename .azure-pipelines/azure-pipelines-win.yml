@@ -8,10 +8,14 @@ jobs:
     vmImage: windows-2022
   strategy:
     matrix:
-      win_64_:
-        CONFIG: win_64_
+      win_64_fortran_compilerflangfortran_compiler_version21libblas3.9.___netlibliblapack3.9.___netlib:
+        CONFIG: win_64_fortran_compilerflangfortran_compiler_version21libblas3.9.___netlibliblapack3.9.___netlib
         UPLOAD_PACKAGES: 'True'
-        SHORT_CONFIG: win_64_
+        SHORT_CONFIG: win_64_fortran_compilerflangfortran_comp_h697f69e2
+      win_64_fortran_compilerifxfortran_compiler_version2025._libblas3.9.___mklliblapack3.9.___mkl:
+        CONFIG: win_64_fortran_compilerifxfortran_compiler_version2025._libblas3.9.___mklliblapack3.9.___mkl
+        UPLOAD_PACKAGES: 'True'
+        SHORT_CONFIG: win_64_fortran_compilerifxfortran_compil_hdea994c0
   timeoutInMinutes: 360
   variables:
     CONDA_BLD_PATH: D:\\bld\\

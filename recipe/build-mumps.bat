@@ -10,7 +10,6 @@ copy %src%\src\mumps_int_def32_h.in %src%\include\mumps_int_def.h
 
 :: For ifx: set up compiler paths and name-mangling flags
 set "MUMPS_USE_IFX=OFF"
-set "EXTRA_FC_FLAGS="
 set "FC_COMPILER_ARG="
 where ifx >nul 2>nul
 if not errorlevel 1 (
@@ -22,7 +21,9 @@ if not errorlevel 1 (
     set "FC_COMPILER_ARG=-DCMAKE_Fortran_COMPILER=ifx"
     :: Force lowercase+underscore naming to match -DAdd_ convention.
     :: CMake's compiler ID detection may not recognise conda-packaged ifx.
-    set "EXTRA_FC_FLAGS=/names:lowercase /assume:underscore /nologo"
+    :: Append to FFLAGS rather than passing -DCMAKE_Fortran_FLAGS so conda's
+    :: compiler flags from activation scripts are preserved.
+    set "FFLAGS=%FFLAGS% /names:lowercase /assume:underscore /nologo"
     set "MUMPS_USE_IFX=ON"
     if errorlevel 1 exit 1
 )
@@ -37,7 +38,6 @@ cmake -G "Ninja" ^
       -DCMAKE_PREFIX_PATH=%LIBRARY_PREFIX% ^
       -DCMAKE_INSTALL_PREFIX:PATH=%LIBRARY_PREFIX% ^
       -DCMAKE_BUILD_TYPE:STRING=Release ^
-      -DCMAKE_Fortran_FLAGS="%EXTRA_FC_FLAGS%" ^
       -DMUMPS_USE_IFX=%MUMPS_USE_IFX% ^
       ..
 if errorlevel 1 exit 1

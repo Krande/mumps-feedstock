@@ -51,9 +51,10 @@ endif()
 # the -DAdd_ convention, and enable debug symbols.
 if(CMAKE_Fortran_COMPILER_ID STREQUAL "IntelLLVM" AND WIN32)
   set(CMAKE_Fortran_FLAGS "${CMAKE_Fortran_FLAGS} /names:lowercase /assume:underscore")
-  set(CMAKE_Fortran_FLAGS "${CMAKE_Fortran_FLAGS} /Z7 /traceback")
-  set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} /DEBUG")
-  set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} /DEBUG")
+  # Match the dynamic CRT (/MD) used by the C objects; otherwise ifx defaults to
+  # /libs:static and drags in libucrt.lib, which lacks __imp_* entries for
+  # remove/strdup/_ftime64/ferror/fread/fseek and fails to link the DLLs.
+  set(CMAKE_Fortran_FLAGS "${CMAKE_Fortran_FLAGS} /libs:dll /threads")
 endif()
 
 include_directories(

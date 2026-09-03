@@ -271,10 +271,14 @@ outputs:
             - dmumps
             - cmumps
             - zmumps
+      # No `env:` block here on purpose. rattler-build >= ~0.72 runs a test
+      # script that declares `env:` against the *outer* environment rather than
+      # the activated test env, which drops pkg-config (and everything else in
+      # requirements.run) off PATH -> "pkg-config: command not found".
+      # It is redundant anyway: rattler-build sets both CONDA_BUILD=1 and
+      # PKG_NAME in test environments, and openmpi's activation keys off either.
       - script:
           file: run_test-mpi
-          env:
-            CONDA_BUILD: "1"
         files:
           source:
             - examples/

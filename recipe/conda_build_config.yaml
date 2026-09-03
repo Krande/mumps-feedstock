@@ -41,8 +41,15 @@ fortran_compiler:  # [win]
   - flang  # [win]
   - ifx  # [win]
 
+# Pinning flang to 2021 because of compilation error with 2023:
+# front_data_mgt_m.F:94:38
+#double_linked_list.F:32:11
+#mumps_static_mapping.F:1974:7
+#  error: runtime derived type info descriptor was not generated ...
+#  PLEASE submit a bug report to https://github.com/llvm/llvm-project/issues/
+#  flang: error: flang frontend command failed due to signal
 fortran_compiler_version:  # [win]
-  - "23"  # [win]
+  - "21"  # [win]
   - "2025.*"  # [win]
 
 libblas:  # [win]

@@ -93,7 +93,7 @@ outputs:
         - if: win and fortran_compiler == 'flang'
           then:
             - llvm-openmp
-            - llvm-openmp-fortran
+            - llvm-openmp-fortran ${{ fortran_compiler_version }}.*
         - if: win and fortran_compiler == 'ifx'
           then:
             - mkl-devel

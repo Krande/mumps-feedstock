@@ -41,7 +41,7 @@ fortran_compiler:  # [win]
   - flang  # [win]
   - ifx  # [win]
 
-# Pinning flang to 2021 because of compilation error with 2023:
+# Pinning flang to 21 because of compilation error with 23:
 # front_data_mgt_m.F:94:38
 #double_linked_list.F:32:11
 #mumps_static_mapping.F:1974:7

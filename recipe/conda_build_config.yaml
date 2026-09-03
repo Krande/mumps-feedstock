@@ -7,14 +7,32 @@ scotch_intsize:
   - "32"
   - "64"
 
+# Fortran ABI marker, following the convention established in
+# https://github.com/conda-forge/flang-activation-feedstock/issues/14
+# (see test-drive, toml-f, mctc-lib, dftd4, ... for prior art).
+#
+# Fortran symbol mangling, derived-type layout and the Fortran runtime are all
+# compiler specific, so anything calling MUMPS through its Fortran interface
+# (INCLUDE 'dmumps_struc.h' + link dmumps) must use the variant built by its own
+# compiler. Consumers of the C interface (dmumps_c.h) are unaffected.
+#
+# The value is baked into the build string of every output that contains
+# compiled Fortran, and `mumps-{seq,mpi}-devel` run-export a pin on it so that
+# Fortran consumers propagate the constraint automatically.
+module_abi:
+  - gfortran  # [unix]
+  - flang  # [win]
+  - ifx  # [win]
+
 # Windows has two Fortran compiler variants:
 #   flang  + netlib BLAS (conda-forge default)
 #   ifx    + MKL BLAS    (needed for code_aster ABI compatibility)
-# zip_keys ensures fortran_compiler and BLAS are correlated.
+# zip_keys ensures fortran_compiler, its ABI marker and BLAS are correlated.
 zip_keys:  # [win]
   -   # [win]
     - fortran_compiler  # [win]
     - fortran_compiler_version  # [win]
+    - module_abi  # [win]
     - libblas  # [win]
     - liblapack  # [win]
     - scotch_intsize  # [win]

@@ -164,6 +164,8 @@ outputs:
               - test_header_abi.f90
           requirements:
             run:
+              - ${{ compiler('c') }}
+              - ${{ stdlib('c') }}
               - ${{ compiler('fortran') }}
               - python
       - if: not win

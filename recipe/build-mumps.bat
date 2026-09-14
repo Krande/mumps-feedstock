@@ -46,9 +46,9 @@ cmake --build . --config Release --target install
 if errorlevel 1 exit 1
 
 :: Patch installed headers: make INTEGER/LOGICAL kinds explicit so that
-:: code_aster's global /integer-size:64 does not inflate MUMPS struct fields.
+:: downstream consumers global /integer-size:64 does not inflate MUMPS struct fields.
 :: MUMPS is LP64 (4-byte default integer); without this, the struct layout
-:: in code_aster would mismatch the MUMPS DLL.
+:: in a downstream consumer would mismatch the MUMPS DLL.
 python %RECIPE_DIR%\make_integers_explicit.py %LIBRARY_PREFIX%\include
 if errorlevel 1 exit 1
 

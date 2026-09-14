@@ -231,6 +231,31 @@ outputs:
           run:
             - python
 
+    about:
+      summary: Fortran ABI marker for mumps-seq
+      description: |
+        Fortran ABI marker for `mumps-seq`. Depend on this only if you call MUMPS
+        from Fortran.
+
+        The C interface (`dmumps_c.h`) is ABI stable across compilers, so C and
+        C++ consumers should depend on `mumps-seq` directly and ignore this
+        package.
+
+        The Fortran interface is not: symbol mangling, derived-type layout and
+        the Fortran runtime all depend on the compiler that built the library,
+        and on Windows both a flang and an Intel ifx build are published.
+        Fortran consumers should put the matching ABI in `host:`:
+
+            - mumps-seq-devel * flang_*
+
+        The build-string prefix names the ABI: `flang_` or `ifx_` on Windows
+        (`flang_` is the conda-forge default), `gfortran_` elsewhere. Depending
+        on it run-exports a matching pin, so the ABI you build against is the
+        one installed at runtime.
+
+        Nothing enforces this automatically -- pick the prefix matching the
+        compiler your recipe builds with. A mismatch still links, and fails at
+        runtime.
   - package:
       name: mumps-mpi
     build:
@@ -332,7 +357,31 @@ outputs:
         requirements:
           run:
             - python
+    about:
+      summary: Fortran ABI marker for mumps-mpi
+      description: |
+        Fortran ABI marker for `mumps-mpi`. Depend on this only if you call MUMPS
+        from Fortran.
 
+        The C interface (`dmumps_c.h`) is ABI stable across compilers, so C and
+        C++ consumers should depend on `mumps-mpi` directly and ignore this
+        package.
+
+        The Fortran interface is not: symbol mangling, derived-type layout and
+        the Fortran runtime all depend on the compiler that built the library,
+        and on Windows both a flang and an Intel ifx build are published.
+        Fortran consumers should put the matching ABI in `host:`:
+
+            - mumps-mpi-devel * flang_*
+
+        The build-string prefix names the ABI: `flang_` or `ifx_` on Windows
+        (`flang_` is the conda-forge default), `gfortran_` elsewhere. Depending
+        on it run-exports a matching pin, so the ABI you build against is the
+        one installed at runtime.
+
+        Nothing enforces this automatically -- pick the prefix matching the
+        compiler your recipe builds with. A mismatch still links, and fails at
+        runtime.
 about:
   license: CECILL-C
   license_file: LICENSE

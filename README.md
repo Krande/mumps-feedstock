@@ -3,6 +3,10 @@ About mumps-feedstock
 
 Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/mumps-feedstock/blob/main/LICENSE.txt)
 
+
+About mumps
+-----------
+
 Home: https://mumps-solver.org/
 
 Package license: CECILL-C
@@ -17,6 +21,74 @@ matrix that can be either unsymmetric, symmetric positive definite, or
 general symmetric, on distributed memory computers. MUMPS implements a
 direct method based on a multifrontal approach which performs a Gaussian
 factorization.
+
+About mumps-mpi-devel
+---------------------
+
+Home: https://mumps-solver.org/
+
+Package license: CECILL-C
+
+Summary: Fortran ABI marker for mumps-mpi
+
+Documentation: https://mumps-solver.org/index.php?page=doc
+
+Fortran ABI marker for `mumps-mpi`. Depend on this only if you call MUMPS
+from Fortran.
+
+The C interface (`dmumps_c.h`) is ABI stable across compilers, so C and
+C++ consumers should depend on `mumps-mpi` directly and ignore this
+package.
+
+The Fortran interface is not: symbol mangling, derived-type layout and
+the Fortran runtime all depend on the compiler that built the library,
+and on Windows both a flang and an Intel ifx build are published.
+Fortran consumers should put the matching ABI in `host:`:
+
+    - mumps-mpi-devel * flang_*
+
+The build-string prefix names the ABI: `flang_` or `ifx_` on Windows
+(`flang_` is the conda-forge default), `gfortran_` elsewhere. Depending
+on it run-exports a matching pin, so the ABI you build against is the
+one installed at runtime.
+
+Nothing enforces this automatically -- pick the prefix matching the
+compiler your recipe builds with. A mismatch still links, and fails at
+runtime.
+
+About mumps-seq-devel
+---------------------
+
+Home: https://mumps-solver.org/
+
+Package license: CECILL-C
+
+Summary: Fortran ABI marker for mumps-seq
+
+Documentation: https://mumps-solver.org/index.php?page=doc
+
+Fortran ABI marker for `mumps-seq`. Depend on this only if you call MUMPS
+from Fortran.
+
+The C interface (`dmumps_c.h`) is ABI stable across compilers, so C and
+C++ consumers should depend on `mumps-seq` directly and ignore this
+package.
+
+The Fortran interface is not: symbol mangling, derived-type layout and
+the Fortran runtime all depend on the compiler that built the library,
+and on Windows both a flang and an Intel ifx build are published.
+Fortran consumers should put the matching ABI in `host:`:
+
+    - mumps-seq-devel * flang_*
+
+The build-string prefix names the ABI: `flang_` or `ifx_` on Windows
+(`flang_` is the conda-forge default), `gfortran_` elsewhere. Depending
+on it run-exports a matching pin, so the ABI you build against is the
+one installed at runtime.
+
+Nothing enforces this automatically -- pick the prefix matching the
+compiler your recipe builds with. A mismatch still links, and fails at
+runtime.
 
 Current build status
 ====================
@@ -36,7 +108,7 @@ Current build status
     <td>
       <details>
         <summary>
-          <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=653&branchName=main">
+          <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=None&branchName=main">
             <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/mumps-feedstock?branchName=main">
           </a>
         </summary>
@@ -45,42 +117,42 @@ Current build status
           <tbody><tr>
               <td>osx_64_mpimpichscotch_intsize32</td>
               <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=653&branchName=main">
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=None&branchName=main">
                   <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/mumps-feedstock?branchName=main&jobName=osx&configuration=osx%20osx_64_mpimpichscotch_intsize32" alt="variant">
                 </a>
               </td>
             </tr><tr>
               <td>osx_64_mpimpichscotch_intsize64</td>
               <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=653&branchName=main">
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=None&branchName=main">
                   <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/mumps-feedstock?branchName=main&jobName=osx&configuration=osx%20osx_64_mpimpichscotch_intsize64" alt="variant">
                 </a>
               </td>
             </tr><tr>
               <td>osx_64_mpinompiscotch_intsize32</td>
               <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=653&branchName=main">
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=None&branchName=main">
                   <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/mumps-feedstock?branchName=main&jobName=osx&configuration=osx%20osx_64_mpinompiscotch_intsize32" alt="variant">
                 </a>
               </td>
             </tr><tr>
               <td>osx_64_mpinompiscotch_intsize64</td>
               <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=653&branchName=main">
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=None&branchName=main">
                   <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/mumps-feedstock?branchName=main&jobName=osx&configuration=osx%20osx_64_mpinompiscotch_intsize64" alt="variant">
                 </a>
               </td>
             </tr><tr>
               <td>osx_64_mpiopenmpiscotch_intsize32</td>
               <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=653&branchName=main">
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=None&branchName=main">
                   <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/mumps-feedstock?branchName=main&jobName=osx&configuration=osx%20osx_64_mpiopenmpiscotch_intsize32" alt="variant">
                 </a>
               </td>
             </tr><tr>
               <td>osx_64_mpiopenmpiscotch_intsize64</td>
               <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=653&branchName=main">
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=None&branchName=main">
                   <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/mumps-feedstock?branchName=main&jobName=osx&configuration=osx%20osx_64_mpiopenmpiscotch_intsize64" alt="variant">
                 </a>
               </td>

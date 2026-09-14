@@ -148,6 +148,24 @@ outputs:
                 - zmumps_struc.h
                 - mumps_seq/mpi.h
                 - mumps_seq/mpif.h
+      # On Windows build-mumps.bat rewrites the installed Fortran headers with
+      # make_integers_explicit.py. CMake compiles the bundled simpletests
+      # *before* that rewrite and only runs them afterwards, so nothing
+      # actually compiles the patched headers. This does, and asserts the
+      # property the rewrite exists to guarantee: the derived-type layout must
+      # not change when a consumer compiles with a 64-bit default INTEGER.
+      - if: win
+        then:
+          script:
+            - python test-header-abi.py
+          files:
+            recipe:
+              - test-header-abi.py
+              - test_header_abi.f90
+          requirements:
+            run:
+              - ${{ compiler('fortran') }}
+              - python
       - if: not win
         then:
           script: run_test-seq

@@ -11,8 +11,9 @@ copy %src%\src\mumps_int_def32_h.in %src%\include\mumps_int_def.h
 :: For ifx: set up compiler paths and name-mangling flags
 set "MUMPS_USE_IFX=OFF"
 set "FC_COMPILER_ARG="
-where ifx >nul 2>nul
-if not errorlevel 1 (
+
+:: FC is either "flang.exe" or "ifx"
+if "%FC%" == "ifx" (
     :: Set up Intel Fortran compiler paths from conda build prefix
     set "PATH=%BUILD_PREFIX%\Library\bin\compiler;%BUILD_PREFIX%\Library\bin;%BUILD_PREFIX%\Scripts;%PATH%"
     set "LIB=%BUILD_PREFIX%\Library\lib;%LIB%"

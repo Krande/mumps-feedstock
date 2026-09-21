@@ -47,6 +47,16 @@ if(WITH_MPI)
   endif()
 endif()
 
+# Intel Fortran (ifx) on Windows: force lowercase+underscore naming to match
+# the -DAdd_ convention, and enable debug symbols.
+if(CMAKE_Fortran_COMPILER_ID STREQUAL "IntelLLVM" AND WIN32)
+  set(CMAKE_Fortran_FLAGS "${CMAKE_Fortran_FLAGS} /names:lowercase /assume:underscore")
+  # Match the dynamic CRT (/MD) used by the C objects; otherwise ifx defaults to
+  # /libs:static and drags in libucrt.lib, which lacks __imp_* entries for
+  # remove/strdup/_ftime64/ferror/fread/fseek and fails to link the DLLs.
+  set(CMAKE_Fortran_FLAGS "${CMAKE_Fortran_FLAGS} /libs:dll /threads")
+endif()
+
 include_directories(
   ${MUMPS_SOURCE_DIR}/include
   ${MUMPS_SOURCE_DIR}/src

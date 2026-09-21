@@ -3,6 +3,10 @@ About mumps-feedstock
 
 Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/mumps-feedstock/blob/main/LICENSE.txt)
 
+
+About mumps
+-----------
+
 Home: https://mumps-solver.org/
 
 Package license: CECILL-C
@@ -18,11 +22,86 @@ general symmetric, on distributed memory computers. MUMPS implements a
 direct method based on a multifrontal approach which performs a Gaussian
 factorization.
 
+About mumps-mpi-devel
+---------------------
+
+Home: https://mumps-solver.org/
+
+Package license: CECILL-C
+
+Summary: Fortran ABI marker for mumps-mpi
+
+Documentation: https://mumps-solver.org/index.php?page=doc
+
+Fortran ABI marker for `mumps-mpi`. Depend on this only if you call MUMPS
+from Fortran.
+
+The C interface (`dmumps_c.h`) is ABI stable across compilers, so C and
+C++ consumers should depend on `mumps-mpi` directly and ignore this
+package.
+
+The Fortran interface is not: symbol mangling, derived-type layout and
+the Fortran runtime all depend on the compiler that built the library,
+and on Windows both a flang and an Intel ifx build are published.
+Fortran consumers should put the matching ABI in `host:`:
+
+    - mumps-mpi-devel * flang_*
+
+The build-string prefix names the ABI: `flang_` or `ifx_` on Windows
+(`flang_` is the conda-forge default), `gfortran_` elsewhere. Depending
+on it run-exports a matching pin, so the ABI you build against is the
+one installed at runtime.
+
+Nothing enforces this automatically -- pick the prefix matching the
+compiler your recipe builds with. A mismatch still links, and fails at
+runtime.
+
+About mumps-seq-devel
+---------------------
+
+Home: https://mumps-solver.org/
+
+Package license: CECILL-C
+
+Summary: Fortran ABI marker for mumps-seq
+
+Documentation: https://mumps-solver.org/index.php?page=doc
+
+Fortran ABI marker for `mumps-seq`. Depend on this only if you call MUMPS
+from Fortran.
+
+The C interface (`dmumps_c.h`) is ABI stable across compilers, so C and
+C++ consumers should depend on `mumps-seq` directly and ignore this
+package.
+
+The Fortran interface is not: symbol mangling, derived-type layout and
+the Fortran runtime all depend on the compiler that built the library,
+and on Windows both a flang and an Intel ifx build are published.
+Fortran consumers should put the matching ABI in `host:`:
+
+    - mumps-seq-devel * flang_*
+
+The build-string prefix names the ABI: `flang_` or `ifx_` on Windows
+(`flang_` is the conda-forge default), `gfortran_` elsewhere. Depending
+on it run-exports a matching pin, so the ABI you build against is the
+one installed at runtime.
+
+Nothing enforces this automatically -- pick the prefix matching the
+compiler your recipe builds with. A mismatch still links, and fails at
+runtime.
+
 Current build status
 ====================
 
 
-<table>
+<table><tr>
+    <td>GitHub Actions</td>
+    <td>
+      <a href="https://github.com/conda-forge/mumps-feedstock/actions/workflows/conda-build.yml">
+        <img src="https://github.com/conda-forge/mumps-feedstock/actions/workflows/conda-build.yml/badge.svg?event=push&branch=main">
+      </a>
+    </td>
+  </tr>
     
   <tr>
     <td>Azure</td>
@@ -36,132 +115,6 @@ Current build status
         <table>
           <thead><tr><th>Variant</th><th>Status</th></tr></thead>
           <tbody><tr>
-              <td>linux_64_mpimpichscotch_intsize32</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=653&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/mumps-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_64_mpimpichscotch_intsize32" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
-              <td>linux_64_mpimpichscotch_intsize64</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=653&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/mumps-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_64_mpimpichscotch_intsize64" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
-              <td>linux_64_mpinompiscotch_intsize32</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=653&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/mumps-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_64_mpinompiscotch_intsize32" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
-              <td>linux_64_mpinompiscotch_intsize64</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=653&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/mumps-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_64_mpinompiscotch_intsize64" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
-              <td>linux_64_mpiopenmpiscotch_intsize32</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=653&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/mumps-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_64_mpiopenmpiscotch_intsize32" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
-              <td>linux_64_mpiopenmpiscotch_intsize64</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=653&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/mumps-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_64_mpiopenmpiscotch_intsize64" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
-              <td>linux_aarch64_mpimpichscotch_intsize32</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=653&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/mumps-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_aarch64_mpimpichscotch_intsize32" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
-              <td>linux_aarch64_mpimpichscotch_intsize64</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=653&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/mumps-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_aarch64_mpimpichscotch_intsize64" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
-              <td>linux_aarch64_mpinompiscotch_intsize32</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=653&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/mumps-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_aarch64_mpinompiscotch_intsize32" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
-              <td>linux_aarch64_mpinompiscotch_intsize64</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=653&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/mumps-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_aarch64_mpinompiscotch_intsize64" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
-              <td>linux_aarch64_mpiopenmpiscotch_intsize32</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=653&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/mumps-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_aarch64_mpiopenmpiscotch_intsize32" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
-              <td>linux_aarch64_mpiopenmpiscotch_intsize64</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=653&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/mumps-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_aarch64_mpiopenmpiscotch_intsize64" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
-              <td>linux_ppc64le_mpimpichscotch_intsize32</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=653&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/mumps-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_ppc64le_mpimpichscotch_intsize32" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
-              <td>linux_ppc64le_mpimpichscotch_intsize64</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=653&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/mumps-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_ppc64le_mpimpichscotch_intsize64" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
-              <td>linux_ppc64le_mpinompiscotch_intsize32</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=653&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/mumps-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_ppc64le_mpinompiscotch_intsize32" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
-              <td>linux_ppc64le_mpinompiscotch_intsize64</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=653&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/mumps-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_ppc64le_mpinompiscotch_intsize64" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
-              <td>linux_ppc64le_mpiopenmpiscotch_intsize32</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=653&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/mumps-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_ppc64le_mpiopenmpiscotch_intsize32" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
-              <td>linux_ppc64le_mpiopenmpiscotch_intsize64</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=653&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/mumps-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_ppc64le_mpiopenmpiscotch_intsize64" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
               <td>osx_64_mpimpichscotch_intsize32</td>
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=653&branchName=main">
@@ -203,55 +156,6 @@ Current build status
                   <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/mumps-feedstock?branchName=main&jobName=osx&configuration=osx%20osx_64_mpiopenmpiscotch_intsize64" alt="variant">
                 </a>
               </td>
-            </tr><tr>
-              <td>osx_arm64_mpimpichscotch_intsize32</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=653&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/mumps-feedstock?branchName=main&jobName=osx&configuration=osx%20osx_arm64_mpimpichscotch_intsize32" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
-              <td>osx_arm64_mpimpichscotch_intsize64</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=653&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/mumps-feedstock?branchName=main&jobName=osx&configuration=osx%20osx_arm64_mpimpichscotch_intsize64" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
-              <td>osx_arm64_mpinompiscotch_intsize32</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=653&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/mumps-feedstock?branchName=main&jobName=osx&configuration=osx%20osx_arm64_mpinompiscotch_intsize32" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
-              <td>osx_arm64_mpinompiscotch_intsize64</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=653&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/mumps-feedstock?branchName=main&jobName=osx&configuration=osx%20osx_arm64_mpinompiscotch_intsize64" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
-              <td>osx_arm64_mpiopenmpiscotch_intsize32</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=653&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/mumps-feedstock?branchName=main&jobName=osx&configuration=osx%20osx_arm64_mpiopenmpiscotch_intsize32" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
-              <td>osx_arm64_mpiopenmpiscotch_intsize64</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=653&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/mumps-feedstock?branchName=main&jobName=osx&configuration=osx%20osx_arm64_mpiopenmpiscotch_intsize64" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
-              <td>win_64</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=653&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/mumps-feedstock?branchName=main&jobName=win&configuration=win%20win_64_" alt="variant">
-                </a>
-              </td>
             </tr>
           </tbody>
         </table>
@@ -267,7 +171,9 @@ Current release info
 | --- | --- | --- | --- |
 | [![Conda Recipe](https://img.shields.io/badge/recipe-mumps--include-green.svg)](https://anaconda.org/conda-forge/mumps-include) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/mumps-include.svg)](https://anaconda.org/conda-forge/mumps-include) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/mumps-include.svg)](https://anaconda.org/conda-forge/mumps-include) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/mumps-include.svg)](https://anaconda.org/conda-forge/mumps-include) |
 | [![Conda Recipe](https://img.shields.io/badge/recipe-mumps--mpi-green.svg)](https://anaconda.org/conda-forge/mumps-mpi) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/mumps-mpi.svg)](https://anaconda.org/conda-forge/mumps-mpi) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/mumps-mpi.svg)](https://anaconda.org/conda-forge/mumps-mpi) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/mumps-mpi.svg)](https://anaconda.org/conda-forge/mumps-mpi) |
+| [![Conda Recipe](https://img.shields.io/badge/recipe-mumps--mpi--devel-green.svg)](https://anaconda.org/conda-forge/mumps-mpi-devel) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/mumps-mpi-devel.svg)](https://anaconda.org/conda-forge/mumps-mpi-devel) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/mumps-mpi-devel.svg)](https://anaconda.org/conda-forge/mumps-mpi-devel) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/mumps-mpi-devel.svg)](https://anaconda.org/conda-forge/mumps-mpi-devel) |
 | [![Conda Recipe](https://img.shields.io/badge/recipe-mumps--seq-green.svg)](https://anaconda.org/conda-forge/mumps-seq) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/mumps-seq.svg)](https://anaconda.org/conda-forge/mumps-seq) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/mumps-seq.svg)](https://anaconda.org/conda-forge/mumps-seq) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/mumps-seq.svg)](https://anaconda.org/conda-forge/mumps-seq) |
+| [![Conda Recipe](https://img.shields.io/badge/recipe-mumps--seq--devel-green.svg)](https://anaconda.org/conda-forge/mumps-seq-devel) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/mumps-seq-devel.svg)](https://anaconda.org/conda-forge/mumps-seq-devel) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/mumps-seq-devel.svg)](https://anaconda.org/conda-forge/mumps-seq-devel) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/mumps-seq-devel.svg)](https://anaconda.org/conda-forge/mumps-seq-devel) |
 
 Installing mumps
 ================
@@ -279,31 +185,73 @@ conda config --add channels conda-forge
 conda config --set channel_priority strict
 ```
 
-Once the `conda-forge` channel has been enabled, `mumps-include, mumps-mpi, mumps-seq` can be installed with `conda`:
+How to use
+----------
+
+<details>
+<summary>With conda</summary>
 
 ```
-conda install mumps-include mumps-mpi mumps-seq
+conda install mumps-include mumps-mpi mumps-mpi-devel mumps-seq mumps-seq-devel
 ```
 
-or with `mamba`:
+</details>
+
+<details>
+<summary>With mamba</summary>
 
 ```
-mamba install mumps-include mumps-mpi mumps-seq
+mamba install mumps-include mumps-mpi mumps-mpi-devel mumps-seq mumps-seq-devel
 ```
 
-It is possible to list all of the versions of `mumps-include` available on your platform with `conda`:
+</details>
+
+<details>
+<summary>With pixi</summary>
+
+```
+# for adding to your local project
+pixi add mumps-include mumps-mpi mumps-mpi-devel mumps-seq mumps-seq-devel
+# for installing globally
+pixi global install mumps-include mumps-mpi mumps-mpi-devel mumps-seq mumps-seq-devel
+```
+
+</details>
+
+Search package versions
+-----------------------
+
+It is possible to list all of the versions of `mumps-include` available on your platform:
+
+<details>
+<summary>With conda</summary>
 
 ```
 conda search mumps-include --channel conda-forge
 ```
 
-or with `mamba`:
+</details>
+
+<details>
+<summary>With mamba</summary>
 
 ```
 mamba search mumps-include --channel conda-forge
 ```
 
-Alternatively, `mamba repoquery` may provide more information:
+</details>
+
+<details>
+<summary>With pixi</summary>
+
+```
+pixi search mumps-include --channel conda-forge
+```
+
+</details>
+
+<details>
+<summary>With mamba repoquery, which may provide more information</summary>
 
 ```
 # Search all versions available on your platform:
@@ -315,6 +263,8 @@ mamba repoquery whoneeds mumps-include --channel conda-forge
 # List dependencies of `mumps-include`:
 mamba repoquery depends mumps-include --channel conda-forge
 ```
+
+</details>
 
 
 About conda-forge

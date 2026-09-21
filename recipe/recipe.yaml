@@ -2,6 +2,7 @@ schema_version: 1
 
 context:
   version: "5.8.2"
+  build_num: 3
 
 recipe:
   name: mumps
@@ -15,7 +16,7 @@ source:
     - ifdef-openmp.patch
 
 build:
-  number: 2
+  number: ${{ build_num }}
 
 outputs:
   - package:
@@ -45,6 +46,18 @@ outputs:
     build:
       skip: mpi != 'nompi'
       script: build-mumps
+      # Tag the Fortran ABI into the build string so the flang and ifx variants
+      # on Windows are distinguishable and pinnable. See module_abi in
+      # conda_build_config.yaml.
+      string: ${{ module_abi }}_h${{ hash }}_${{ build_num }}
+      # Keep flang the default on Windows. The ifx variant carries the same
+      # name/version/build-number as the flang one, so without this the solver
+      # could hand an ifx build to an existing consumer that never asked for it.
+      # down_prioritize_variant is implemented via track_features, so the ifx
+      # build is only ever selected when something explicitly requests it
+      # (e.g. `mumps-seq-fortran-devel * ifx_*`).
+      variant:
+        down_prioritize_variant: ${{ 1 if module_abi == 'ifx' else 0 }}
     requirements:
       build:
         - ${{ compiler('fortran') }}
@@ -76,9 +89,14 @@ outputs:
             - metis
             - libscotch
             - libscotch * int${{ scotch_intsize }}_*
-          else:
+        # flang needs LLVM OpenMP runtime; ifx needs MKL headers/libs
+        - if: win and fortran_compiler == 'flang'
+          then:
             - llvm-openmp
-            - llvm-openmp-fortran
+            - llvm-openmp-fortran ${{ fortran_compiler_version }}.*
+        - if: win and fortran_compiler == 'ifx'
+          then:
+            - mkl-devel
       run:
         - if: not win
           then:
@@ -130,6 +148,26 @@ outputs:
                 - zmumps_struc.h
                 - mumps_seq/mpi.h
                 - mumps_seq/mpif.h
+      # On Windows build-mumps.bat rewrites the installed Fortran headers with
+      # make_integers_explicit.py. CMake compiles the bundled simpletests
+      # *before* that rewrite and only runs them afterwards, so nothing
+      # actually compiles the patched headers. This does, and asserts the
+      # property the rewrite exists to guarantee: the derived-type layout must
+      # not change when a consumer compiles with a 64-bit default INTEGER.
+      - if: win
+        then:
+          script:
+            - python test-header-abi.py
+          files:
+            recipe:
+              - test-header-abi.py
+              - test_header_abi.f90
+          requirements:
+            run:
+              - ${{ compiler('c') }}
+              - ${{ stdlib('c') }}
+              - ${{ compiler('fortran') }}
+              - python
       - if: not win
         then:
           script: run_test-seq
@@ -143,11 +181,95 @@ outputs:
               - make
               - pkg-config
 
+  # ---------------------------------------------------------------------------
+  # Fortran ABI marker packages.
+  #
+  # MUMPS' C interface (dmumps_c.h) is ABI stable across Fortran compilers, but
+  # its Fortran interface is not: symbol mangling, derived-type layout and the
+  # Fortran runtime all depend on the compiler that built the libraries. On
+  # Windows we ship both a flang and an ifx build, so a Fortran consumer has to
+  # be able to say which one it needs.
+  #
+  # `mumps-*-fortran-devel` is a metapackage that does exactly that. Depend on it from
+  # `host:` as e.g.
+  #
+  #     - mumps-seq-fortran-devel * ${{ module_abi }}_*
+  #
+  # and the ABI-matched `mumps-seq` is pulled into both host and (via the
+  # run-export below) run. Consumers of the C interface should keep depending on
+  # plain `mumps-seq` / `mumps-mpi` and stay unconstrained.
+  #
+  # See https://github.com/conda-forge/flang-activation-feedstock/issues/14
+  # ---------------------------------------------------------------------------
+  - package:
+      name: mumps-seq-fortran-devel
+    build:
+      skip: mpi != 'nompi'
+      string: ${{ module_abi }}_h${{ hash }}_${{ build_num }}
+      variant:
+        # scotch_intsize is irrelevant to the ABI marker itself, but keeping it
+        # here mirrors the variant matrix of the package being pinned and keeps
+        # conda-smithy splitting CI jobs per intsize as before.
+        use_keys:
+          - module_abi
+          - mpi
+          - scotch_intsize
+        # see note on mumps-seq above
+        down_prioritize_variant: ${{ 1 if module_abi == 'ifx' else 0 }}
+    requirements:
+      run:
+        - ${{ pin_subpackage('mumps-seq', upper_bound='x.x.x', build=module_abi ~ '_*') }}
+      run_exports:
+        - ${{ pin_subpackage('mumps-seq', upper_bound='x.x.x', build=module_abi ~ '_*') }}
+    tests:
+      - script:
+          - python test-fortran-abi.py mumps-seq ${{ module_abi }}
+        files:
+          recipe:
+            - test-fortran-abi.py
+        requirements:
+          run:
+            - python
+
+    about:
+      summary: Fortran ABI marker for mumps-seq
+      description: |
+        Fortran ABI marker for `mumps-seq`. Depend on this only if you call MUMPS
+        from Fortran.
+
+        The C interface (`dmumps_c.h`) is ABI stable across compilers, so C and
+        C++ consumers should depend on `mumps-seq` directly and ignore this
+        package.
+
+        The Fortran interface is not: symbol mangling, derived-type layout and
+        the Fortran runtime all depend on the compiler that built the library,
+        and on Windows both a flang and an Intel ifx build are published.
+        Fortran consumers should put the matching ABI in `host:`:
+
+            - mumps-seq-fortran-devel * flang_*
+
+        The build-string prefix names the ABI: `flang_` or `ifx_` on Windows
+        (`flang_` is the conda-forge default), `gfortran_` elsewhere. Depending
+        on it run-exports a matching pin, so the ABI you build against is the
+        one installed at runtime.
+
+        Nothing enforces this automatically -- pick the prefix matching the
+        compiler your recipe builds with. A mismatch still links, and fails at
+        runtime.
   - package:
       name: mumps-mpi
     build:
       skip: mpi == 'nompi'
       script: build-mumps
+      string: ${{ module_abi }}_h${{ hash }}_${{ build_num }}
+      # Keep flang the default on Windows. The ifx variant carries the same
+      # name/version/build-number as the flang one, so without this the solver
+      # could hand an ifx build to an existing consumer that never asked for it.
+      # down_prioritize_variant is implemented via track_features, so the ifx
+      # build is only ever selected when something explicitly requests it
+      # (e.g. `mumps-seq-fortran-devel * ifx_*`).
+      variant:
+        down_prioritize_variant: ${{ 1 if module_abi == 'ifx' else 0 }}
     requirements:
       build:
         - ${{ compiler('fortran') }}
@@ -196,8 +318,6 @@ outputs:
             - zmumps
       - script:
           file: run_test-mpi
-          env:
-            CONDA_BUILD: "1"
         files:
           source:
             - examples/
@@ -208,6 +328,60 @@ outputs:
             - make
             - pkg-config
 
+  - package:
+      name: mumps-mpi-fortran-devel
+    build:
+      skip: mpi == 'nompi'
+      string: ${{ module_abi }}_h${{ hash }}_${{ build_num }}
+      variant:
+        # scotch_intsize is irrelevant to the ABI marker itself, but keeping it
+        # here mirrors the variant matrix of the package being pinned and keeps
+        # conda-smithy splitting CI jobs per intsize as before.
+        use_keys:
+          - module_abi
+          - mpi
+          - scotch_intsize
+        # see note on mumps-seq above
+        down_prioritize_variant: ${{ 1 if module_abi == 'ifx' else 0 }}
+    requirements:
+      run:
+        - ${{ pin_subpackage('mumps-mpi', upper_bound='x.x.x', build=module_abi ~ '_*') }}
+      run_exports:
+        - ${{ pin_subpackage('mumps-mpi', upper_bound='x.x.x', build=module_abi ~ '_*') }}
+    tests:
+      - script:
+          - python test-fortran-abi.py mumps-mpi ${{ module_abi }}
+        files:
+          recipe:
+            - test-fortran-abi.py
+        requirements:
+          run:
+            - python
+    about:
+      summary: Fortran ABI marker for mumps-mpi
+      description: |
+        Fortran ABI marker for `mumps-mpi`. Depend on this only if you call MUMPS
+        from Fortran.
+
+        The C interface (`dmumps_c.h`) is ABI stable across compilers, so C and
+        C++ consumers should depend on `mumps-mpi` directly and ignore this
+        package.
+
+        The Fortran interface is not: symbol mangling, derived-type layout and
+        the Fortran runtime all depend on the compiler that built the library,
+        and on Windows both a flang and an Intel ifx build are published.
+        Fortran consumers should put the matching ABI in `host:`:
+
+            - mumps-mpi-fortran-devel * flang_*
+
+        The build-string prefix names the ABI: `flang_` or `ifx_` on Windows
+        (`flang_` is the conda-forge default), `gfortran_` elsewhere. Depending
+        on it run-exports a matching pin, so the ABI you build against is the
+        one installed at runtime.
+
+        Nothing enforces this automatically -- pick the prefix matching the
+        compiler your recipe builds with. A mismatch still links, and fails at
+        runtime.
 about:
   license: CECILL-C
   license_file: LICENSE

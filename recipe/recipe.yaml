@@ -55,7 +55,7 @@ outputs:
       # could hand an ifx build to an existing consumer that never asked for it.
       # down_prioritize_variant is implemented via track_features, so the ifx
       # build is only ever selected when something explicitly requests it
-      # (e.g. `mumps-seq-devel * ifx_*`).
+      # (e.g. `mumps-seq-fortran-devel * ifx_*`).
       variant:
         down_prioritize_variant: ${{ 1 if module_abi == 'ifx' else 0 }}
     requirements:
@@ -190,10 +190,10 @@ outputs:
   # Windows we ship both a flang and an ifx build, so a Fortran consumer has to
   # be able to say which one it needs.
   #
-  # `mumps-*-devel` is a metapackage that does exactly that. Depend on it from
+  # `mumps-*-fortran-devel` is a metapackage that does exactly that. Depend on it from
   # `host:` as e.g.
   #
-  #     - mumps-seq-devel * ${{ module_abi }}_*
+  #     - mumps-seq-fortran-devel * ${{ module_abi }}_*
   #
   # and the ABI-matched `mumps-seq` is pulled into both host and (via the
   # run-export below) run. Consumers of the C interface should keep depending on
@@ -202,7 +202,7 @@ outputs:
   # See https://github.com/conda-forge/flang-activation-feedstock/issues/14
   # ---------------------------------------------------------------------------
   - package:
-      name: mumps-seq-devel
+      name: mumps-seq-fortran-devel
     build:
       skip: mpi != 'nompi'
       string: ${{ module_abi }}_h${{ hash }}_${{ build_num }}
@@ -246,7 +246,7 @@ outputs:
         and on Windows both a flang and an Intel ifx build are published.
         Fortran consumers should put the matching ABI in `host:`:
 
-            - mumps-seq-devel * flang_*
+            - mumps-seq-fortran-devel * flang_*
 
         The build-string prefix names the ABI: `flang_` or `ifx_` on Windows
         (`flang_` is the conda-forge default), `gfortran_` elsewhere. Depending
@@ -267,7 +267,7 @@ outputs:
       # could hand an ifx build to an existing consumer that never asked for it.
       # down_prioritize_variant is implemented via track_features, so the ifx
       # build is only ever selected when something explicitly requests it
-      # (e.g. `mumps-seq-devel * ifx_*`).
+      # (e.g. `mumps-seq-fortran-devel * ifx_*`).
       variant:
         down_prioritize_variant: ${{ 1 if module_abi == 'ifx' else 0 }}
     requirements:
@@ -329,7 +329,7 @@ outputs:
             - pkg-config
 
   - package:
-      name: mumps-mpi-devel
+      name: mumps-mpi-fortran-devel
     build:
       skip: mpi == 'nompi'
       string: ${{ module_abi }}_h${{ hash }}_${{ build_num }}
@@ -372,7 +372,7 @@ outputs:
         and on Windows both a flang and an Intel ifx build are published.
         Fortran consumers should put the matching ABI in `host:`:
 
-            - mumps-mpi-devel * flang_*
+            - mumps-mpi-fortran-devel * flang_*
 
         The build-string prefix names the ABI: `flang_` or `ifx_` on Windows
         (`flang_` is the conda-forge default), `gfortran_` elsewhere. Depending

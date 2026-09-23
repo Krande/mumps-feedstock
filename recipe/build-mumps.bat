@@ -30,6 +30,16 @@ if "%FC%" == "ifx" (
 )
 echo MUMPS build: MUMPS_USE_IFX=%MUMPS_USE_IFX% scotch_intsize=%scotch_intsize%
 
+:: MPI (Intel MPI on Windows): parallel MUMPS with MKL ScaLAPACK/BLACS and
+:: PT-SCOTCH/METIS/PORD orderings; see the WIN32 branch in CMakeLists.txt
+set "MUMPS_WITH_MPI=OFF"
+set "MPIEXEC="
+if not "%mpi%" == "nompi" (
+    set "MUMPS_WITH_MPI=ON"
+    set "MPIEXEC=mpiexec -n 2"
+)
+echo MUMPS build: WITH_MPI=%MUMPS_WITH_MPI% mpi=%mpi%
+
 mkdir build
 cd build
 
@@ -40,6 +50,8 @@ cmake -G "Ninja" ^
       -DCMAKE_INSTALL_PREFIX:PATH=%LIBRARY_PREFIX% ^
       -DCMAKE_BUILD_TYPE:STRING=Release ^
       -DMUMPS_USE_IFX=%MUMPS_USE_IFX% ^
+      -DWITH_MPI=%MUMPS_WITH_MPI% ^
+      -DMPI_ROOT=%LIBRARY_PREFIX% ^
       ..
 if errorlevel 1 exit 1
 cmake --build . --config Release --target install
@@ -52,14 +64,14 @@ if errorlevel 1 exit 1
 python %RECIPE_DIR%\make_integers_explicit.py %LIBRARY_PREFIX%\include
 if errorlevel 1 exit 1
 
-:: Verify simpletests
-%src%\build\c_example < %src%\examples\input_simpletest_real
+:: Verify simpletests (MPI build: under mpiexec -n 2, stdin goes to rank 0)
+%MPIEXEC% %src%\build\c_example < %src%\examples\input_simpletest_real
 if errorlevel 1 exit 1
-%src%\build\ssimpletest < %src%\examples\input_simpletest_real
+%MPIEXEC% %src%\build\ssimpletest < %src%\examples\input_simpletest_real
 if errorlevel 1 exit 1
-%src%\build\dsimpletest < %src%\examples\input_simpletest_real
+%MPIEXEC% %src%\build\dsimpletest < %src%\examples\input_simpletest_real
 if errorlevel 1 exit 1
-%src%\build\csimpletest < %src%\examples\input_simpletest_cmplx
+%MPIEXEC% %src%\build\csimpletest < %src%\examples\input_simpletest_cmplx
 if errorlevel 1 exit 1
-%src%\build\zsimpletest < %src%\examples\input_simpletest_cmplx
+%MPIEXEC% %src%\build\zsimpletest < %src%\examples\input_simpletest_cmplx
 if errorlevel 1 exit 1

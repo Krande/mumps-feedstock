@@ -2,6 +2,9 @@ mpi:
   - nompi
   - mpich  # [not win]
   - openmpi  # [not win]
+  # Windows MPI: Intel MPI (ifx + MKL ScaLAPACK/BLACS). Only the ifx module_abi
+  # is built with it (see skip in recipe.yaml).
+  - impi  # [win]
 
 scotch_intsize:
   - "32"

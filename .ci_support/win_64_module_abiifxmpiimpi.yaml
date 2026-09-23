@@ -14,12 +14,16 @@ libblas:
 - 3.9.* *mkl
 liblapack:
 - 3.9.* *mkl
+libscotch:
+- 7.0.11
+metis:
+- 5.1.0
 mkl_devel:
 - '2026'
 module_abi:
 - ifx
 mpi:
-- nompi
+- impi
 mpich:
 - '5'
 openmpi:

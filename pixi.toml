@@ -4,10 +4,10 @@
 "$schema" = "https://pixi.sh/v0.59.0/schema/manifest/schema.json"
 
 [workspace]
-name = "mumps-feedstock"
-version = "2026.9.10"  # conda-smithy version used to generate this file
-description = "Pixi configuration for conda-forge/mumps-feedstock"
-authors = ["@conda-forge/mumps"]
+name = "mumps-feedstock-mpi-feedstock"
+version = "2026.9.23"  # conda-smithy version used to generate this file
+description = "Pixi configuration for conda-forge/mumps-feedstock-mpi-feedstock"
+authors = ["@conda-forge/mumps-feedstock-mpi"]
 channels = ["conda-forge"]
 platforms = ["linux-64", "linux-aarch64", "linux-ppc64le", "osx-64", "win-64"]
 requires-pixi = ">=0.59.0"
@@ -36,295 +36,304 @@ cmd = "inspect_artifacts --all-packages"
 description = "List contents of all packages found in rattler-build build directory."
 [feature.build.tasks.build]
 cmd = "rattler-build build --recipe recipe"
-description = "Build mumps-feedstock directly (without setup scripts), no particular variant specified"
+description = "Build mumps-feedstock-mpi-feedstock directly (without setup scripts), no particular variant specified"
 [feature.build.tasks."build-linux_64_mpimpichscotch_intsize32"]
 cmd = "rattler-build build --recipe recipe -m .ci_support/linux_64_mpimpichscotch_intsize32.yaml --target-platform linux-64"
-description = "Build mumps-feedstock with variant linux_64_mpimpichscotch_intsize32 directly (without setup scripts)"
+description = "Build mumps-feedstock-mpi-feedstock with variant linux_64_mpimpichscotch_intsize32 directly (without setup scripts)"
 [feature.build.tasks."debug-linux_64_mpimpichscotch_intsize32"]
 cmd = "rattler-build debug setup --recipe recipe -m .ci_support/linux_64_mpimpichscotch_intsize32.yaml --target-platform linux-64"
-description = "Debug mumps-feedstock with variant linux_64_mpimpichscotch_intsize32 directly (without setup scripts)"
+description = "Debug mumps-feedstock-mpi-feedstock with variant linux_64_mpimpichscotch_intsize32 directly (without setup scripts)"
 [feature.build.tasks."inspect-linux_64_mpimpichscotch_intsize32"]
 cmd = "inspect_artifacts --recipe-dir recipe -m .ci_support/linux_64_mpimpichscotch_intsize32.yaml"
-description = "List contents of mumps-feedstock packages built for variant linux_64_mpimpichscotch_intsize32"
+description = "List contents of mumps-feedstock-mpi-feedstock packages built for variant linux_64_mpimpichscotch_intsize32"
 [feature.build.tasks."build-linux_64_mpimpichscotch_intsize64"]
 cmd = "rattler-build build --recipe recipe -m .ci_support/linux_64_mpimpichscotch_intsize64.yaml --target-platform linux-64"
-description = "Build mumps-feedstock with variant linux_64_mpimpichscotch_intsize64 directly (without setup scripts)"
+description = "Build mumps-feedstock-mpi-feedstock with variant linux_64_mpimpichscotch_intsize64 directly (without setup scripts)"
 [feature.build.tasks."debug-linux_64_mpimpichscotch_intsize64"]
 cmd = "rattler-build debug setup --recipe recipe -m .ci_support/linux_64_mpimpichscotch_intsize64.yaml --target-platform linux-64"
-description = "Debug mumps-feedstock with variant linux_64_mpimpichscotch_intsize64 directly (without setup scripts)"
+description = "Debug mumps-feedstock-mpi-feedstock with variant linux_64_mpimpichscotch_intsize64 directly (without setup scripts)"
 [feature.build.tasks."inspect-linux_64_mpimpichscotch_intsize64"]
 cmd = "inspect_artifacts --recipe-dir recipe -m .ci_support/linux_64_mpimpichscotch_intsize64.yaml"
-description = "List contents of mumps-feedstock packages built for variant linux_64_mpimpichscotch_intsize64"
+description = "List contents of mumps-feedstock-mpi-feedstock packages built for variant linux_64_mpimpichscotch_intsize64"
 [feature.build.tasks."build-linux_64_mpinompiscotch_intsize32"]
 cmd = "rattler-build build --recipe recipe -m .ci_support/linux_64_mpinompiscotch_intsize32.yaml --target-platform linux-64"
-description = "Build mumps-feedstock with variant linux_64_mpinompiscotch_intsize32 directly (without setup scripts)"
+description = "Build mumps-feedstock-mpi-feedstock with variant linux_64_mpinompiscotch_intsize32 directly (without setup scripts)"
 [feature.build.tasks."debug-linux_64_mpinompiscotch_intsize32"]
 cmd = "rattler-build debug setup --recipe recipe -m .ci_support/linux_64_mpinompiscotch_intsize32.yaml --target-platform linux-64"
-description = "Debug mumps-feedstock with variant linux_64_mpinompiscotch_intsize32 directly (without setup scripts)"
+description = "Debug mumps-feedstock-mpi-feedstock with variant linux_64_mpinompiscotch_intsize32 directly (without setup scripts)"
 [feature.build.tasks."inspect-linux_64_mpinompiscotch_intsize32"]
 cmd = "inspect_artifacts --recipe-dir recipe -m .ci_support/linux_64_mpinompiscotch_intsize32.yaml"
-description = "List contents of mumps-feedstock packages built for variant linux_64_mpinompiscotch_intsize32"
+description = "List contents of mumps-feedstock-mpi-feedstock packages built for variant linux_64_mpinompiscotch_intsize32"
 [feature.build.tasks."build-linux_64_mpinompiscotch_intsize64"]
 cmd = "rattler-build build --recipe recipe -m .ci_support/linux_64_mpinompiscotch_intsize64.yaml --target-platform linux-64"
-description = "Build mumps-feedstock with variant linux_64_mpinompiscotch_intsize64 directly (without setup scripts)"
+description = "Build mumps-feedstock-mpi-feedstock with variant linux_64_mpinompiscotch_intsize64 directly (without setup scripts)"
 [feature.build.tasks."debug-linux_64_mpinompiscotch_intsize64"]
 cmd = "rattler-build debug setup --recipe recipe -m .ci_support/linux_64_mpinompiscotch_intsize64.yaml --target-platform linux-64"
-description = "Debug mumps-feedstock with variant linux_64_mpinompiscotch_intsize64 directly (without setup scripts)"
+description = "Debug mumps-feedstock-mpi-feedstock with variant linux_64_mpinompiscotch_intsize64 directly (without setup scripts)"
 [feature.build.tasks."inspect-linux_64_mpinompiscotch_intsize64"]
 cmd = "inspect_artifacts --recipe-dir recipe -m .ci_support/linux_64_mpinompiscotch_intsize64.yaml"
-description = "List contents of mumps-feedstock packages built for variant linux_64_mpinompiscotch_intsize64"
+description = "List contents of mumps-feedstock-mpi-feedstock packages built for variant linux_64_mpinompiscotch_intsize64"
 [feature.build.tasks."build-linux_64_mpiopenmpiscotch_intsize32"]
 cmd = "rattler-build build --recipe recipe -m .ci_support/linux_64_mpiopenmpiscotch_intsize32.yaml --target-platform linux-64"
-description = "Build mumps-feedstock with variant linux_64_mpiopenmpiscotch_intsize32 directly (without setup scripts)"
+description = "Build mumps-feedstock-mpi-feedstock with variant linux_64_mpiopenmpiscotch_intsize32 directly (without setup scripts)"
 [feature.build.tasks."debug-linux_64_mpiopenmpiscotch_intsize32"]
 cmd = "rattler-build debug setup --recipe recipe -m .ci_support/linux_64_mpiopenmpiscotch_intsize32.yaml --target-platform linux-64"
-description = "Debug mumps-feedstock with variant linux_64_mpiopenmpiscotch_intsize32 directly (without setup scripts)"
+description = "Debug mumps-feedstock-mpi-feedstock with variant linux_64_mpiopenmpiscotch_intsize32 directly (without setup scripts)"
 [feature.build.tasks."inspect-linux_64_mpiopenmpiscotch_intsize32"]
 cmd = "inspect_artifacts --recipe-dir recipe -m .ci_support/linux_64_mpiopenmpiscotch_intsize32.yaml"
-description = "List contents of mumps-feedstock packages built for variant linux_64_mpiopenmpiscotch_intsize32"
+description = "List contents of mumps-feedstock-mpi-feedstock packages built for variant linux_64_mpiopenmpiscotch_intsize32"
 [feature.build.tasks."build-linux_64_mpiopenmpiscotch_intsize64"]
 cmd = "rattler-build build --recipe recipe -m .ci_support/linux_64_mpiopenmpiscotch_intsize64.yaml --target-platform linux-64"
-description = "Build mumps-feedstock with variant linux_64_mpiopenmpiscotch_intsize64 directly (without setup scripts)"
+description = "Build mumps-feedstock-mpi-feedstock with variant linux_64_mpiopenmpiscotch_intsize64 directly (without setup scripts)"
 [feature.build.tasks."debug-linux_64_mpiopenmpiscotch_intsize64"]
 cmd = "rattler-build debug setup --recipe recipe -m .ci_support/linux_64_mpiopenmpiscotch_intsize64.yaml --target-platform linux-64"
-description = "Debug mumps-feedstock with variant linux_64_mpiopenmpiscotch_intsize64 directly (without setup scripts)"
+description = "Debug mumps-feedstock-mpi-feedstock with variant linux_64_mpiopenmpiscotch_intsize64 directly (without setup scripts)"
 [feature.build.tasks."inspect-linux_64_mpiopenmpiscotch_intsize64"]
 cmd = "inspect_artifacts --recipe-dir recipe -m .ci_support/linux_64_mpiopenmpiscotch_intsize64.yaml"
-description = "List contents of mumps-feedstock packages built for variant linux_64_mpiopenmpiscotch_intsize64"
+description = "List contents of mumps-feedstock-mpi-feedstock packages built for variant linux_64_mpiopenmpiscotch_intsize64"
 [feature.build.tasks."build-linux_aarch64_mpimpichscotch_intsize32"]
 cmd = "rattler-build build --recipe recipe -m .ci_support/linux_aarch64_mpimpichscotch_intsize32.yaml --target-platform linux-aarch64"
-description = "Build mumps-feedstock with variant linux_aarch64_mpimpichscotch_intsize32 directly (without setup scripts)"
+description = "Build mumps-feedstock-mpi-feedstock with variant linux_aarch64_mpimpichscotch_intsize32 directly (without setup scripts)"
 [feature.build.tasks."debug-linux_aarch64_mpimpichscotch_intsize32"]
 cmd = "rattler-build debug setup --recipe recipe -m .ci_support/linux_aarch64_mpimpichscotch_intsize32.yaml --target-platform linux-aarch64"
-description = "Debug mumps-feedstock with variant linux_aarch64_mpimpichscotch_intsize32 directly (without setup scripts)"
+description = "Debug mumps-feedstock-mpi-feedstock with variant linux_aarch64_mpimpichscotch_intsize32 directly (without setup scripts)"
 [feature.build.tasks."inspect-linux_aarch64_mpimpichscotch_intsize32"]
 cmd = "inspect_artifacts --recipe-dir recipe -m .ci_support/linux_aarch64_mpimpichscotch_intsize32.yaml"
-description = "List contents of mumps-feedstock packages built for variant linux_aarch64_mpimpichscotch_intsize32"
+description = "List contents of mumps-feedstock-mpi-feedstock packages built for variant linux_aarch64_mpimpichscotch_intsize32"
 [feature.build.tasks."build-linux_aarch64_mpimpichscotch_intsize64"]
 cmd = "rattler-build build --recipe recipe -m .ci_support/linux_aarch64_mpimpichscotch_intsize64.yaml --target-platform linux-aarch64"
-description = "Build mumps-feedstock with variant linux_aarch64_mpimpichscotch_intsize64 directly (without setup scripts)"
+description = "Build mumps-feedstock-mpi-feedstock with variant linux_aarch64_mpimpichscotch_intsize64 directly (without setup scripts)"
 [feature.build.tasks."debug-linux_aarch64_mpimpichscotch_intsize64"]
 cmd = "rattler-build debug setup --recipe recipe -m .ci_support/linux_aarch64_mpimpichscotch_intsize64.yaml --target-platform linux-aarch64"
-description = "Debug mumps-feedstock with variant linux_aarch64_mpimpichscotch_intsize64 directly (without setup scripts)"
+description = "Debug mumps-feedstock-mpi-feedstock with variant linux_aarch64_mpimpichscotch_intsize64 directly (without setup scripts)"
 [feature.build.tasks."inspect-linux_aarch64_mpimpichscotch_intsize64"]
 cmd = "inspect_artifacts --recipe-dir recipe -m .ci_support/linux_aarch64_mpimpichscotch_intsize64.yaml"
-description = "List contents of mumps-feedstock packages built for variant linux_aarch64_mpimpichscotch_intsize64"
+description = "List contents of mumps-feedstock-mpi-feedstock packages built for variant linux_aarch64_mpimpichscotch_intsize64"
 [feature.build.tasks."build-linux_aarch64_mpinompiscotch_intsize32"]
 cmd = "rattler-build build --recipe recipe -m .ci_support/linux_aarch64_mpinompiscotch_intsize32.yaml --target-platform linux-aarch64"
-description = "Build mumps-feedstock with variant linux_aarch64_mpinompiscotch_intsize32 directly (without setup scripts)"
+description = "Build mumps-feedstock-mpi-feedstock with variant linux_aarch64_mpinompiscotch_intsize32 directly (without setup scripts)"
 [feature.build.tasks."debug-linux_aarch64_mpinompiscotch_intsize32"]
 cmd = "rattler-build debug setup --recipe recipe -m .ci_support/linux_aarch64_mpinompiscotch_intsize32.yaml --target-platform linux-aarch64"
-description = "Debug mumps-feedstock with variant linux_aarch64_mpinompiscotch_intsize32 directly (without setup scripts)"
+description = "Debug mumps-feedstock-mpi-feedstock with variant linux_aarch64_mpinompiscotch_intsize32 directly (without setup scripts)"
 [feature.build.tasks."inspect-linux_aarch64_mpinompiscotch_intsize32"]
 cmd = "inspect_artifacts --recipe-dir recipe -m .ci_support/linux_aarch64_mpinompiscotch_intsize32.yaml"
-description = "List contents of mumps-feedstock packages built for variant linux_aarch64_mpinompiscotch_intsize32"
+description = "List contents of mumps-feedstock-mpi-feedstock packages built for variant linux_aarch64_mpinompiscotch_intsize32"
 [feature.build.tasks."build-linux_aarch64_mpinompiscotch_intsize64"]
 cmd = "rattler-build build --recipe recipe -m .ci_support/linux_aarch64_mpinompiscotch_intsize64.yaml --target-platform linux-aarch64"
-description = "Build mumps-feedstock with variant linux_aarch64_mpinompiscotch_intsize64 directly (without setup scripts)"
+description = "Build mumps-feedstock-mpi-feedstock with variant linux_aarch64_mpinompiscotch_intsize64 directly (without setup scripts)"
 [feature.build.tasks."debug-linux_aarch64_mpinompiscotch_intsize64"]
 cmd = "rattler-build debug setup --recipe recipe -m .ci_support/linux_aarch64_mpinompiscotch_intsize64.yaml --target-platform linux-aarch64"
-description = "Debug mumps-feedstock with variant linux_aarch64_mpinompiscotch_intsize64 directly (without setup scripts)"
+description = "Debug mumps-feedstock-mpi-feedstock with variant linux_aarch64_mpinompiscotch_intsize64 directly (without setup scripts)"
 [feature.build.tasks."inspect-linux_aarch64_mpinompiscotch_intsize64"]
 cmd = "inspect_artifacts --recipe-dir recipe -m .ci_support/linux_aarch64_mpinompiscotch_intsize64.yaml"
-description = "List contents of mumps-feedstock packages built for variant linux_aarch64_mpinompiscotch_intsize64"
+description = "List contents of mumps-feedstock-mpi-feedstock packages built for variant linux_aarch64_mpinompiscotch_intsize64"
 [feature.build.tasks."build-linux_aarch64_mpiopenmpiscotch_intsize32"]
 cmd = "rattler-build build --recipe recipe -m .ci_support/linux_aarch64_mpiopenmpiscotch_intsize32.yaml --target-platform linux-aarch64"
-description = "Build mumps-feedstock with variant linux_aarch64_mpiopenmpiscotch_intsize32 directly (without setup scripts)"
+description = "Build mumps-feedstock-mpi-feedstock with variant linux_aarch64_mpiopenmpiscotch_intsize32 directly (without setup scripts)"
 [feature.build.tasks."debug-linux_aarch64_mpiopenmpiscotch_intsize32"]
 cmd = "rattler-build debug setup --recipe recipe -m .ci_support/linux_aarch64_mpiopenmpiscotch_intsize32.yaml --target-platform linux-aarch64"
-description = "Debug mumps-feedstock with variant linux_aarch64_mpiopenmpiscotch_intsize32 directly (without setup scripts)"
+description = "Debug mumps-feedstock-mpi-feedstock with variant linux_aarch64_mpiopenmpiscotch_intsize32 directly (without setup scripts)"
 [feature.build.tasks."inspect-linux_aarch64_mpiopenmpiscotch_intsize32"]
 cmd = "inspect_artifacts --recipe-dir recipe -m .ci_support/linux_aarch64_mpiopenmpiscotch_intsize32.yaml"
-description = "List contents of mumps-feedstock packages built for variant linux_aarch64_mpiopenmpiscotch_intsize32"
+description = "List contents of mumps-feedstock-mpi-feedstock packages built for variant linux_aarch64_mpiopenmpiscotch_intsize32"
 [feature.build.tasks."build-linux_aarch64_mpiopenmpiscotch_intsize64"]
 cmd = "rattler-build build --recipe recipe -m .ci_support/linux_aarch64_mpiopenmpiscotch_intsize64.yaml --target-platform linux-aarch64"
-description = "Build mumps-feedstock with variant linux_aarch64_mpiopenmpiscotch_intsize64 directly (without setup scripts)"
+description = "Build mumps-feedstock-mpi-feedstock with variant linux_aarch64_mpiopenmpiscotch_intsize64 directly (without setup scripts)"
 [feature.build.tasks."debug-linux_aarch64_mpiopenmpiscotch_intsize64"]
 cmd = "rattler-build debug setup --recipe recipe -m .ci_support/linux_aarch64_mpiopenmpiscotch_intsize64.yaml --target-platform linux-aarch64"
-description = "Debug mumps-feedstock with variant linux_aarch64_mpiopenmpiscotch_intsize64 directly (without setup scripts)"
+description = "Debug mumps-feedstock-mpi-feedstock with variant linux_aarch64_mpiopenmpiscotch_intsize64 directly (without setup scripts)"
 [feature.build.tasks."inspect-linux_aarch64_mpiopenmpiscotch_intsize64"]
 cmd = "inspect_artifacts --recipe-dir recipe -m .ci_support/linux_aarch64_mpiopenmpiscotch_intsize64.yaml"
-description = "List contents of mumps-feedstock packages built for variant linux_aarch64_mpiopenmpiscotch_intsize64"
+description = "List contents of mumps-feedstock-mpi-feedstock packages built for variant linux_aarch64_mpiopenmpiscotch_intsize64"
 [feature.build.tasks."build-linux_ppc64le_mpimpichscotch_intsize32"]
 cmd = "rattler-build build --recipe recipe -m .ci_support/linux_ppc64le_mpimpichscotch_intsize32.yaml --target-platform linux-ppc64le"
-description = "Build mumps-feedstock with variant linux_ppc64le_mpimpichscotch_intsize32 directly (without setup scripts)"
+description = "Build mumps-feedstock-mpi-feedstock with variant linux_ppc64le_mpimpichscotch_intsize32 directly (without setup scripts)"
 [feature.build.tasks."debug-linux_ppc64le_mpimpichscotch_intsize32"]
 cmd = "rattler-build debug setup --recipe recipe -m .ci_support/linux_ppc64le_mpimpichscotch_intsize32.yaml --target-platform linux-ppc64le"
-description = "Debug mumps-feedstock with variant linux_ppc64le_mpimpichscotch_intsize32 directly (without setup scripts)"
+description = "Debug mumps-feedstock-mpi-feedstock with variant linux_ppc64le_mpimpichscotch_intsize32 directly (without setup scripts)"
 [feature.build.tasks."inspect-linux_ppc64le_mpimpichscotch_intsize32"]
 cmd = "inspect_artifacts --recipe-dir recipe -m .ci_support/linux_ppc64le_mpimpichscotch_intsize32.yaml"
-description = "List contents of mumps-feedstock packages built for variant linux_ppc64le_mpimpichscotch_intsize32"
+description = "List contents of mumps-feedstock-mpi-feedstock packages built for variant linux_ppc64le_mpimpichscotch_intsize32"
 [feature.build.tasks."build-linux_ppc64le_mpimpichscotch_intsize64"]
 cmd = "rattler-build build --recipe recipe -m .ci_support/linux_ppc64le_mpimpichscotch_intsize64.yaml --target-platform linux-ppc64le"
-description = "Build mumps-feedstock with variant linux_ppc64le_mpimpichscotch_intsize64 directly (without setup scripts)"
+description = "Build mumps-feedstock-mpi-feedstock with variant linux_ppc64le_mpimpichscotch_intsize64 directly (without setup scripts)"
 [feature.build.tasks."debug-linux_ppc64le_mpimpichscotch_intsize64"]
 cmd = "rattler-build debug setup --recipe recipe -m .ci_support/linux_ppc64le_mpimpichscotch_intsize64.yaml --target-platform linux-ppc64le"
-description = "Debug mumps-feedstock with variant linux_ppc64le_mpimpichscotch_intsize64 directly (without setup scripts)"
+description = "Debug mumps-feedstock-mpi-feedstock with variant linux_ppc64le_mpimpichscotch_intsize64 directly (without setup scripts)"
 [feature.build.tasks."inspect-linux_ppc64le_mpimpichscotch_intsize64"]
 cmd = "inspect_artifacts --recipe-dir recipe -m .ci_support/linux_ppc64le_mpimpichscotch_intsize64.yaml"
-description = "List contents of mumps-feedstock packages built for variant linux_ppc64le_mpimpichscotch_intsize64"
+description = "List contents of mumps-feedstock-mpi-feedstock packages built for variant linux_ppc64le_mpimpichscotch_intsize64"
 [feature.build.tasks."build-linux_ppc64le_mpinompiscotch_intsize32"]
 cmd = "rattler-build build --recipe recipe -m .ci_support/linux_ppc64le_mpinompiscotch_intsize32.yaml --target-platform linux-ppc64le"
-description = "Build mumps-feedstock with variant linux_ppc64le_mpinompiscotch_intsize32 directly (without setup scripts)"
+description = "Build mumps-feedstock-mpi-feedstock with variant linux_ppc64le_mpinompiscotch_intsize32 directly (without setup scripts)"
 [feature.build.tasks."debug-linux_ppc64le_mpinompiscotch_intsize32"]
 cmd = "rattler-build debug setup --recipe recipe -m .ci_support/linux_ppc64le_mpinompiscotch_intsize32.yaml --target-platform linux-ppc64le"
-description = "Debug mumps-feedstock with variant linux_ppc64le_mpinompiscotch_intsize32 directly (without setup scripts)"
+description = "Debug mumps-feedstock-mpi-feedstock with variant linux_ppc64le_mpinompiscotch_intsize32 directly (without setup scripts)"
 [feature.build.tasks."inspect-linux_ppc64le_mpinompiscotch_intsize32"]
 cmd = "inspect_artifacts --recipe-dir recipe -m .ci_support/linux_ppc64le_mpinompiscotch_intsize32.yaml"
-description = "List contents of mumps-feedstock packages built for variant linux_ppc64le_mpinompiscotch_intsize32"
+description = "List contents of mumps-feedstock-mpi-feedstock packages built for variant linux_ppc64le_mpinompiscotch_intsize32"
 [feature.build.tasks."build-linux_ppc64le_mpinompiscotch_intsize64"]
 cmd = "rattler-build build --recipe recipe -m .ci_support/linux_ppc64le_mpinompiscotch_intsize64.yaml --target-platform linux-ppc64le"
-description = "Build mumps-feedstock with variant linux_ppc64le_mpinompiscotch_intsize64 directly (without setup scripts)"
+description = "Build mumps-feedstock-mpi-feedstock with variant linux_ppc64le_mpinompiscotch_intsize64 directly (without setup scripts)"
 [feature.build.tasks."debug-linux_ppc64le_mpinompiscotch_intsize64"]
 cmd = "rattler-build debug setup --recipe recipe -m .ci_support/linux_ppc64le_mpinompiscotch_intsize64.yaml --target-platform linux-ppc64le"
-description = "Debug mumps-feedstock with variant linux_ppc64le_mpinompiscotch_intsize64 directly (without setup scripts)"
+description = "Debug mumps-feedstock-mpi-feedstock with variant linux_ppc64le_mpinompiscotch_intsize64 directly (without setup scripts)"
 [feature.build.tasks."inspect-linux_ppc64le_mpinompiscotch_intsize64"]
 cmd = "inspect_artifacts --recipe-dir recipe -m .ci_support/linux_ppc64le_mpinompiscotch_intsize64.yaml"
-description = "List contents of mumps-feedstock packages built for variant linux_ppc64le_mpinompiscotch_intsize64"
+description = "List contents of mumps-feedstock-mpi-feedstock packages built for variant linux_ppc64le_mpinompiscotch_intsize64"
 [feature.build.tasks."build-linux_ppc64le_mpiopenmpiscotch_intsize32"]
 cmd = "rattler-build build --recipe recipe -m .ci_support/linux_ppc64le_mpiopenmpiscotch_intsize32.yaml --target-platform linux-ppc64le"
-description = "Build mumps-feedstock with variant linux_ppc64le_mpiopenmpiscotch_intsize32 directly (without setup scripts)"
+description = "Build mumps-feedstock-mpi-feedstock with variant linux_ppc64le_mpiopenmpiscotch_intsize32 directly (without setup scripts)"
 [feature.build.tasks."debug-linux_ppc64le_mpiopenmpiscotch_intsize32"]
 cmd = "rattler-build debug setup --recipe recipe -m .ci_support/linux_ppc64le_mpiopenmpiscotch_intsize32.yaml --target-platform linux-ppc64le"
-description = "Debug mumps-feedstock with variant linux_ppc64le_mpiopenmpiscotch_intsize32 directly (without setup scripts)"
+description = "Debug mumps-feedstock-mpi-feedstock with variant linux_ppc64le_mpiopenmpiscotch_intsize32 directly (without setup scripts)"
 [feature.build.tasks."inspect-linux_ppc64le_mpiopenmpiscotch_intsize32"]
 cmd = "inspect_artifacts --recipe-dir recipe -m .ci_support/linux_ppc64le_mpiopenmpiscotch_intsize32.yaml"
-description = "List contents of mumps-feedstock packages built for variant linux_ppc64le_mpiopenmpiscotch_intsize32"
+description = "List contents of mumps-feedstock-mpi-feedstock packages built for variant linux_ppc64le_mpiopenmpiscotch_intsize32"
 [feature.build.tasks."build-linux_ppc64le_mpiopenmpiscotch_intsize64"]
 cmd = "rattler-build build --recipe recipe -m .ci_support/linux_ppc64le_mpiopenmpiscotch_intsize64.yaml --target-platform linux-ppc64le"
-description = "Build mumps-feedstock with variant linux_ppc64le_mpiopenmpiscotch_intsize64 directly (without setup scripts)"
+description = "Build mumps-feedstock-mpi-feedstock with variant linux_ppc64le_mpiopenmpiscotch_intsize64 directly (without setup scripts)"
 [feature.build.tasks."debug-linux_ppc64le_mpiopenmpiscotch_intsize64"]
 cmd = "rattler-build debug setup --recipe recipe -m .ci_support/linux_ppc64le_mpiopenmpiscotch_intsize64.yaml --target-platform linux-ppc64le"
-description = "Debug mumps-feedstock with variant linux_ppc64le_mpiopenmpiscotch_intsize64 directly (without setup scripts)"
+description = "Debug mumps-feedstock-mpi-feedstock with variant linux_ppc64le_mpiopenmpiscotch_intsize64 directly (without setup scripts)"
 [feature.build.tasks."inspect-linux_ppc64le_mpiopenmpiscotch_intsize64"]
 cmd = "inspect_artifacts --recipe-dir recipe -m .ci_support/linux_ppc64le_mpiopenmpiscotch_intsize64.yaml"
-description = "List contents of mumps-feedstock packages built for variant linux_ppc64le_mpiopenmpiscotch_intsize64"
+description = "List contents of mumps-feedstock-mpi-feedstock packages built for variant linux_ppc64le_mpiopenmpiscotch_intsize64"
 [feature.build.tasks."build-osx_64_mpimpichscotch_intsize32"]
 cmd = "rattler-build build --recipe recipe -m .ci_support/osx_64_mpimpichscotch_intsize32.yaml --target-platform osx-64"
-description = "Build mumps-feedstock with variant osx_64_mpimpichscotch_intsize32 directly (without setup scripts)"
+description = "Build mumps-feedstock-mpi-feedstock with variant osx_64_mpimpichscotch_intsize32 directly (without setup scripts)"
 [feature.build.tasks."debug-osx_64_mpimpichscotch_intsize32"]
 cmd = "rattler-build debug setup --recipe recipe -m .ci_support/osx_64_mpimpichscotch_intsize32.yaml --target-platform osx-64"
-description = "Debug mumps-feedstock with variant osx_64_mpimpichscotch_intsize32 directly (without setup scripts)"
+description = "Debug mumps-feedstock-mpi-feedstock with variant osx_64_mpimpichscotch_intsize32 directly (without setup scripts)"
 [feature.build.tasks."inspect-osx_64_mpimpichscotch_intsize32"]
 cmd = "inspect_artifacts --recipe-dir recipe -m .ci_support/osx_64_mpimpichscotch_intsize32.yaml"
-description = "List contents of mumps-feedstock packages built for variant osx_64_mpimpichscotch_intsize32"
+description = "List contents of mumps-feedstock-mpi-feedstock packages built for variant osx_64_mpimpichscotch_intsize32"
 [feature.build.tasks."build-osx_64_mpimpichscotch_intsize64"]
 cmd = "rattler-build build --recipe recipe -m .ci_support/osx_64_mpimpichscotch_intsize64.yaml --target-platform osx-64"
-description = "Build mumps-feedstock with variant osx_64_mpimpichscotch_intsize64 directly (without setup scripts)"
+description = "Build mumps-feedstock-mpi-feedstock with variant osx_64_mpimpichscotch_intsize64 directly (without setup scripts)"
 [feature.build.tasks."debug-osx_64_mpimpichscotch_intsize64"]
 cmd = "rattler-build debug setup --recipe recipe -m .ci_support/osx_64_mpimpichscotch_intsize64.yaml --target-platform osx-64"
-description = "Debug mumps-feedstock with variant osx_64_mpimpichscotch_intsize64 directly (without setup scripts)"
+description = "Debug mumps-feedstock-mpi-feedstock with variant osx_64_mpimpichscotch_intsize64 directly (without setup scripts)"
 [feature.build.tasks."inspect-osx_64_mpimpichscotch_intsize64"]
 cmd = "inspect_artifacts --recipe-dir recipe -m .ci_support/osx_64_mpimpichscotch_intsize64.yaml"
-description = "List contents of mumps-feedstock packages built for variant osx_64_mpimpichscotch_intsize64"
+description = "List contents of mumps-feedstock-mpi-feedstock packages built for variant osx_64_mpimpichscotch_intsize64"
 [feature.build.tasks."build-osx_64_mpinompiscotch_intsize32"]
 cmd = "rattler-build build --recipe recipe -m .ci_support/osx_64_mpinompiscotch_intsize32.yaml --target-platform osx-64"
-description = "Build mumps-feedstock with variant osx_64_mpinompiscotch_intsize32 directly (without setup scripts)"
+description = "Build mumps-feedstock-mpi-feedstock with variant osx_64_mpinompiscotch_intsize32 directly (without setup scripts)"
 [feature.build.tasks."debug-osx_64_mpinompiscotch_intsize32"]
 cmd = "rattler-build debug setup --recipe recipe -m .ci_support/osx_64_mpinompiscotch_intsize32.yaml --target-platform osx-64"
-description = "Debug mumps-feedstock with variant osx_64_mpinompiscotch_intsize32 directly (without setup scripts)"
+description = "Debug mumps-feedstock-mpi-feedstock with variant osx_64_mpinompiscotch_intsize32 directly (without setup scripts)"
 [feature.build.tasks."inspect-osx_64_mpinompiscotch_intsize32"]
 cmd = "inspect_artifacts --recipe-dir recipe -m .ci_support/osx_64_mpinompiscotch_intsize32.yaml"
-description = "List contents of mumps-feedstock packages built for variant osx_64_mpinompiscotch_intsize32"
+description = "List contents of mumps-feedstock-mpi-feedstock packages built for variant osx_64_mpinompiscotch_intsize32"
 [feature.build.tasks."build-osx_64_mpinompiscotch_intsize64"]
 cmd = "rattler-build build --recipe recipe -m .ci_support/osx_64_mpinompiscotch_intsize64.yaml --target-platform osx-64"
-description = "Build mumps-feedstock with variant osx_64_mpinompiscotch_intsize64 directly (without setup scripts)"
+description = "Build mumps-feedstock-mpi-feedstock with variant osx_64_mpinompiscotch_intsize64 directly (without setup scripts)"
 [feature.build.tasks."debug-osx_64_mpinompiscotch_intsize64"]
 cmd = "rattler-build debug setup --recipe recipe -m .ci_support/osx_64_mpinompiscotch_intsize64.yaml --target-platform osx-64"
-description = "Debug mumps-feedstock with variant osx_64_mpinompiscotch_intsize64 directly (without setup scripts)"
+description = "Debug mumps-feedstock-mpi-feedstock with variant osx_64_mpinompiscotch_intsize64 directly (without setup scripts)"
 [feature.build.tasks."inspect-osx_64_mpinompiscotch_intsize64"]
 cmd = "inspect_artifacts --recipe-dir recipe -m .ci_support/osx_64_mpinompiscotch_intsize64.yaml"
-description = "List contents of mumps-feedstock packages built for variant osx_64_mpinompiscotch_intsize64"
+description = "List contents of mumps-feedstock-mpi-feedstock packages built for variant osx_64_mpinompiscotch_intsize64"
 [feature.build.tasks."build-osx_64_mpiopenmpiscotch_intsize32"]
 cmd = "rattler-build build --recipe recipe -m .ci_support/osx_64_mpiopenmpiscotch_intsize32.yaml --target-platform osx-64"
-description = "Build mumps-feedstock with variant osx_64_mpiopenmpiscotch_intsize32 directly (without setup scripts)"
+description = "Build mumps-feedstock-mpi-feedstock with variant osx_64_mpiopenmpiscotch_intsize32 directly (without setup scripts)"
 [feature.build.tasks."debug-osx_64_mpiopenmpiscotch_intsize32"]
 cmd = "rattler-build debug setup --recipe recipe -m .ci_support/osx_64_mpiopenmpiscotch_intsize32.yaml --target-platform osx-64"
-description = "Debug mumps-feedstock with variant osx_64_mpiopenmpiscotch_intsize32 directly (without setup scripts)"
+description = "Debug mumps-feedstock-mpi-feedstock with variant osx_64_mpiopenmpiscotch_intsize32 directly (without setup scripts)"
 [feature.build.tasks."inspect-osx_64_mpiopenmpiscotch_intsize32"]
 cmd = "inspect_artifacts --recipe-dir recipe -m .ci_support/osx_64_mpiopenmpiscotch_intsize32.yaml"
-description = "List contents of mumps-feedstock packages built for variant osx_64_mpiopenmpiscotch_intsize32"
+description = "List contents of mumps-feedstock-mpi-feedstock packages built for variant osx_64_mpiopenmpiscotch_intsize32"
 [feature.build.tasks."build-osx_64_mpiopenmpiscotch_intsize64"]
 cmd = "rattler-build build --recipe recipe -m .ci_support/osx_64_mpiopenmpiscotch_intsize64.yaml --target-platform osx-64"
-description = "Build mumps-feedstock with variant osx_64_mpiopenmpiscotch_intsize64 directly (without setup scripts)"
+description = "Build mumps-feedstock-mpi-feedstock with variant osx_64_mpiopenmpiscotch_intsize64 directly (without setup scripts)"
 [feature.build.tasks."debug-osx_64_mpiopenmpiscotch_intsize64"]
 cmd = "rattler-build debug setup --recipe recipe -m .ci_support/osx_64_mpiopenmpiscotch_intsize64.yaml --target-platform osx-64"
-description = "Debug mumps-feedstock with variant osx_64_mpiopenmpiscotch_intsize64 directly (without setup scripts)"
+description = "Debug mumps-feedstock-mpi-feedstock with variant osx_64_mpiopenmpiscotch_intsize64 directly (without setup scripts)"
 [feature.build.tasks."inspect-osx_64_mpiopenmpiscotch_intsize64"]
 cmd = "inspect_artifacts --recipe-dir recipe -m .ci_support/osx_64_mpiopenmpiscotch_intsize64.yaml"
-description = "List contents of mumps-feedstock packages built for variant osx_64_mpiopenmpiscotch_intsize64"
+description = "List contents of mumps-feedstock-mpi-feedstock packages built for variant osx_64_mpiopenmpiscotch_intsize64"
 [feature.build.tasks."build-osx_arm64_mpimpichscotch_intsize32"]
 cmd = "rattler-build build --recipe recipe -m .ci_support/osx_arm64_mpimpichscotch_intsize32.yaml --target-platform osx-arm64"
-description = "Build mumps-feedstock with variant osx_arm64_mpimpichscotch_intsize32 directly (without setup scripts)"
+description = "Build mumps-feedstock-mpi-feedstock with variant osx_arm64_mpimpichscotch_intsize32 directly (without setup scripts)"
 [feature.build.tasks."debug-osx_arm64_mpimpichscotch_intsize32"]
 cmd = "rattler-build debug setup --recipe recipe -m .ci_support/osx_arm64_mpimpichscotch_intsize32.yaml --target-platform osx-arm64"
-description = "Debug mumps-feedstock with variant osx_arm64_mpimpichscotch_intsize32 directly (without setup scripts)"
+description = "Debug mumps-feedstock-mpi-feedstock with variant osx_arm64_mpimpichscotch_intsize32 directly (without setup scripts)"
 [feature.build.tasks."inspect-osx_arm64_mpimpichscotch_intsize32"]
 cmd = "inspect_artifacts --recipe-dir recipe -m .ci_support/osx_arm64_mpimpichscotch_intsize32.yaml"
-description = "List contents of mumps-feedstock packages built for variant osx_arm64_mpimpichscotch_intsize32"
+description = "List contents of mumps-feedstock-mpi-feedstock packages built for variant osx_arm64_mpimpichscotch_intsize32"
 [feature.build.tasks."build-osx_arm64_mpimpichscotch_intsize64"]
 cmd = "rattler-build build --recipe recipe -m .ci_support/osx_arm64_mpimpichscotch_intsize64.yaml --target-platform osx-arm64"
-description = "Build mumps-feedstock with variant osx_arm64_mpimpichscotch_intsize64 directly (without setup scripts)"
+description = "Build mumps-feedstock-mpi-feedstock with variant osx_arm64_mpimpichscotch_intsize64 directly (without setup scripts)"
 [feature.build.tasks."debug-osx_arm64_mpimpichscotch_intsize64"]
 cmd = "rattler-build debug setup --recipe recipe -m .ci_support/osx_arm64_mpimpichscotch_intsize64.yaml --target-platform osx-arm64"
-description = "Debug mumps-feedstock with variant osx_arm64_mpimpichscotch_intsize64 directly (without setup scripts)"
+description = "Debug mumps-feedstock-mpi-feedstock with variant osx_arm64_mpimpichscotch_intsize64 directly (without setup scripts)"
 [feature.build.tasks."inspect-osx_arm64_mpimpichscotch_intsize64"]
 cmd = "inspect_artifacts --recipe-dir recipe -m .ci_support/osx_arm64_mpimpichscotch_intsize64.yaml"
-description = "List contents of mumps-feedstock packages built for variant osx_arm64_mpimpichscotch_intsize64"
+description = "List contents of mumps-feedstock-mpi-feedstock packages built for variant osx_arm64_mpimpichscotch_intsize64"
 [feature.build.tasks."build-osx_arm64_mpinompiscotch_intsize32"]
 cmd = "rattler-build build --recipe recipe -m .ci_support/osx_arm64_mpinompiscotch_intsize32.yaml --target-platform osx-arm64"
-description = "Build mumps-feedstock with variant osx_arm64_mpinompiscotch_intsize32 directly (without setup scripts)"
+description = "Build mumps-feedstock-mpi-feedstock with variant osx_arm64_mpinompiscotch_intsize32 directly (without setup scripts)"
 [feature.build.tasks."debug-osx_arm64_mpinompiscotch_intsize32"]
 cmd = "rattler-build debug setup --recipe recipe -m .ci_support/osx_arm64_mpinompiscotch_intsize32.yaml --target-platform osx-arm64"
-description = "Debug mumps-feedstock with variant osx_arm64_mpinompiscotch_intsize32 directly (without setup scripts)"
+description = "Debug mumps-feedstock-mpi-feedstock with variant osx_arm64_mpinompiscotch_intsize32 directly (without setup scripts)"
 [feature.build.tasks."inspect-osx_arm64_mpinompiscotch_intsize32"]
 cmd = "inspect_artifacts --recipe-dir recipe -m .ci_support/osx_arm64_mpinompiscotch_intsize32.yaml"
-description = "List contents of mumps-feedstock packages built for variant osx_arm64_mpinompiscotch_intsize32"
+description = "List contents of mumps-feedstock-mpi-feedstock packages built for variant osx_arm64_mpinompiscotch_intsize32"
 [feature.build.tasks."build-osx_arm64_mpinompiscotch_intsize64"]
 cmd = "rattler-build build --recipe recipe -m .ci_support/osx_arm64_mpinompiscotch_intsize64.yaml --target-platform osx-arm64"
-description = "Build mumps-feedstock with variant osx_arm64_mpinompiscotch_intsize64 directly (without setup scripts)"
+description = "Build mumps-feedstock-mpi-feedstock with variant osx_arm64_mpinompiscotch_intsize64 directly (without setup scripts)"
 [feature.build.tasks."debug-osx_arm64_mpinompiscotch_intsize64"]
 cmd = "rattler-build debug setup --recipe recipe -m .ci_support/osx_arm64_mpinompiscotch_intsize64.yaml --target-platform osx-arm64"
-description = "Debug mumps-feedstock with variant osx_arm64_mpinompiscotch_intsize64 directly (without setup scripts)"
+description = "Debug mumps-feedstock-mpi-feedstock with variant osx_arm64_mpinompiscotch_intsize64 directly (without setup scripts)"
 [feature.build.tasks."inspect-osx_arm64_mpinompiscotch_intsize64"]
 cmd = "inspect_artifacts --recipe-dir recipe -m .ci_support/osx_arm64_mpinompiscotch_intsize64.yaml"
-description = "List contents of mumps-feedstock packages built for variant osx_arm64_mpinompiscotch_intsize64"
+description = "List contents of mumps-feedstock-mpi-feedstock packages built for variant osx_arm64_mpinompiscotch_intsize64"
 [feature.build.tasks."build-osx_arm64_mpiopenmpiscotch_intsize32"]
 cmd = "rattler-build build --recipe recipe -m .ci_support/osx_arm64_mpiopenmpiscotch_intsize32.yaml --target-platform osx-arm64"
-description = "Build mumps-feedstock with variant osx_arm64_mpiopenmpiscotch_intsize32 directly (without setup scripts)"
+description = "Build mumps-feedstock-mpi-feedstock with variant osx_arm64_mpiopenmpiscotch_intsize32 directly (without setup scripts)"
 [feature.build.tasks."debug-osx_arm64_mpiopenmpiscotch_intsize32"]
 cmd = "rattler-build debug setup --recipe recipe -m .ci_support/osx_arm64_mpiopenmpiscotch_intsize32.yaml --target-platform osx-arm64"
-description = "Debug mumps-feedstock with variant osx_arm64_mpiopenmpiscotch_intsize32 directly (without setup scripts)"
+description = "Debug mumps-feedstock-mpi-feedstock with variant osx_arm64_mpiopenmpiscotch_intsize32 directly (without setup scripts)"
 [feature.build.tasks."inspect-osx_arm64_mpiopenmpiscotch_intsize32"]
 cmd = "inspect_artifacts --recipe-dir recipe -m .ci_support/osx_arm64_mpiopenmpiscotch_intsize32.yaml"
-description = "List contents of mumps-feedstock packages built for variant osx_arm64_mpiopenmpiscotch_intsize32"
+description = "List contents of mumps-feedstock-mpi-feedstock packages built for variant osx_arm64_mpiopenmpiscotch_intsize32"
 [feature.build.tasks."build-osx_arm64_mpiopenmpiscotch_intsize64"]
 cmd = "rattler-build build --recipe recipe -m .ci_support/osx_arm64_mpiopenmpiscotch_intsize64.yaml --target-platform osx-arm64"
-description = "Build mumps-feedstock with variant osx_arm64_mpiopenmpiscotch_intsize64 directly (without setup scripts)"
+description = "Build mumps-feedstock-mpi-feedstock with variant osx_arm64_mpiopenmpiscotch_intsize64 directly (without setup scripts)"
 [feature.build.tasks."debug-osx_arm64_mpiopenmpiscotch_intsize64"]
 cmd = "rattler-build debug setup --recipe recipe -m .ci_support/osx_arm64_mpiopenmpiscotch_intsize64.yaml --target-platform osx-arm64"
-description = "Debug mumps-feedstock with variant osx_arm64_mpiopenmpiscotch_intsize64 directly (without setup scripts)"
+description = "Debug mumps-feedstock-mpi-feedstock with variant osx_arm64_mpiopenmpiscotch_intsize64 directly (without setup scripts)"
 [feature.build.tasks."inspect-osx_arm64_mpiopenmpiscotch_intsize64"]
 cmd = "inspect_artifacts --recipe-dir recipe -m .ci_support/osx_arm64_mpiopenmpiscotch_intsize64.yaml"
-description = "List contents of mumps-feedstock packages built for variant osx_arm64_mpiopenmpiscotch_intsize64"
-[feature.build.tasks."build-win_64_module_abiflang"]
-cmd = "rattler-build build --recipe recipe -m .ci_support/win_64_module_abiflang.yaml --target-platform win-64"
-description = "Build mumps-feedstock with variant win_64_module_abiflang directly (without setup scripts)"
-[feature.build.tasks."debug-win_64_module_abiflang"]
-cmd = "rattler-build debug setup --recipe recipe -m .ci_support/win_64_module_abiflang.yaml --target-platform win-64"
-description = "Debug mumps-feedstock with variant win_64_module_abiflang directly (without setup scripts)"
-[feature.build.tasks."inspect-win_64_module_abiflang"]
-cmd = "inspect_artifacts --recipe-dir recipe -m .ci_support/win_64_module_abiflang.yaml"
-description = "List contents of mumps-feedstock packages built for variant win_64_module_abiflang"
-[feature.build.tasks."build-win_64_module_abiifx"]
-cmd = "rattler-build build --recipe recipe -m .ci_support/win_64_module_abiifx.yaml --target-platform win-64"
-description = "Build mumps-feedstock with variant win_64_module_abiifx directly (without setup scripts)"
-[feature.build.tasks."debug-win_64_module_abiifx"]
-cmd = "rattler-build debug setup --recipe recipe -m .ci_support/win_64_module_abiifx.yaml --target-platform win-64"
-description = "Debug mumps-feedstock with variant win_64_module_abiifx directly (without setup scripts)"
-[feature.build.tasks."inspect-win_64_module_abiifx"]
-cmd = "inspect_artifacts --recipe-dir recipe -m .ci_support/win_64_module_abiifx.yaml"
-description = "List contents of mumps-feedstock packages built for variant win_64_module_abiifx"
+description = "List contents of mumps-feedstock-mpi-feedstock packages built for variant osx_arm64_mpiopenmpiscotch_intsize64"
+[feature.build.tasks."build-win_64_module_abiflangmpinompi"]
+cmd = "rattler-build build --recipe recipe -m .ci_support/win_64_module_abiflangmpinompi.yaml --target-platform win-64"
+description = "Build mumps-feedstock-mpi-feedstock with variant win_64_module_abiflangmpinompi directly (without setup scripts)"
+[feature.build.tasks."debug-win_64_module_abiflangmpinompi"]
+cmd = "rattler-build debug setup --recipe recipe -m .ci_support/win_64_module_abiflangmpinompi.yaml --target-platform win-64"
+description = "Debug mumps-feedstock-mpi-feedstock with variant win_64_module_abiflangmpinompi directly (without setup scripts)"
+[feature.build.tasks."inspect-win_64_module_abiflangmpinompi"]
+cmd = "inspect_artifacts --recipe-dir recipe -m .ci_support/win_64_module_abiflangmpinompi.yaml"
+description = "List contents of mumps-feedstock-mpi-feedstock packages built for variant win_64_module_abiflangmpinompi"
+[feature.build.tasks."build-win_64_module_abiifxmpiimpi"]
+cmd = "rattler-build build --recipe recipe -m .ci_support/win_64_module_abiifxmpiimpi.yaml --target-platform win-64"
+description = "Build mumps-feedstock-mpi-feedstock with variant win_64_module_abiifxmpiimpi directly (without setup scripts)"
+[feature.build.tasks."debug-win_64_module_abiifxmpiimpi"]
+cmd = "rattler-build debug setup --recipe recipe -m .ci_support/win_64_module_abiifxmpiimpi.yaml --target-platform win-64"
+description = "Debug mumps-feedstock-mpi-feedstock with variant win_64_module_abiifxmpiimpi directly (without setup scripts)"
+[feature.build.tasks."inspect-win_64_module_abiifxmpiimpi"]
+cmd = "inspect_artifacts --recipe-dir recipe -m .ci_support/win_64_module_abiifxmpiimpi.yaml"
+description = "List contents of mumps-feedstock-mpi-feedstock packages built for variant win_64_module_abiifxmpiimpi"
+[feature.build.tasks."build-win_64_module_abiifxmpinompi"]
+cmd = "rattler-build build --recipe recipe -m .ci_support/win_64_module_abiifxmpinompi.yaml --target-platform win-64"
+description = "Build mumps-feedstock-mpi-feedstock with variant win_64_module_abiifxmpinompi directly (without setup scripts)"
+[feature.build.tasks."debug-win_64_module_abiifxmpinompi"]
+cmd = "rattler-build debug setup --recipe recipe -m .ci_support/win_64_module_abiifxmpinompi.yaml --target-platform win-64"
+description = "Debug mumps-feedstock-mpi-feedstock with variant win_64_module_abiifxmpinompi directly (without setup scripts)"
+[feature.build.tasks."inspect-win_64_module_abiifxmpinompi"]
+cmd = "inspect_artifacts --recipe-dir recipe -m .ci_support/win_64_module_abiifxmpinompi.yaml"
+description = "List contents of mumps-feedstock-mpi-feedstock packages built for variant win_64_module_abiifxmpinompi"
 
 [environments]
 build = ["build"]

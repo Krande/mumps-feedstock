@@ -2,7 +2,7 @@ schema_version: 1
 
 context:
   version: "5.8.2"
-  build_num: 4
+  build_num: 6
   # Windows MPI = Intel MPI. impi-devel run-exports impi_rt pinned to x.x.x, so
   # it must match the impi_rt the MPI dependencies were built against.
   # 2021.16.x ships no Fortran support (no mpif.h / mpi.mod), so >= 2021.17.
@@ -314,15 +314,14 @@ outputs:
             - parmetis
             - scalapack
         - metis
-        # Windows: no PT-SCOTCH for now. The win-64 libptscotch builds are
-        # pinned to impi_rt 2021.16 (no Fortran mpif.h/mpi.mod in that
-        # impi-devel) or 2021.17.0 (old libscotch needing pthreads-win32, which
-        # conflicts with libwinpthread from mkl 2026 -> tbb -> libhwloc).
-        # CMakeLists.txt adds -Dptscotch automatically once it is installable.
+        # Windows: PORD + METIS orderings only, as in the sequential Windows
+        # build (see CMakeLists.txt: the win-64 SCOTCH ordering corrupts the
+        # heap in mumps_scotch_64/esmumps), so no (PT-)SCOTCH dependency.
         - if: not win
-          then: libptscotch
-        - libscotch * int${{ scotch_intsize }}_*
-        - libscotch
+          then:
+            - libptscotch
+            - libscotch * int${{ scotch_intsize }}_*
+            - libscotch
       run:
         - if: not win
           then:

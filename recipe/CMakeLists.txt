@@ -70,14 +70,18 @@ if(WITH_MPI AND WIN32)
   # MPI_ROOT is the conda Library prefix: MKL, SCOTCH and METIS live there too
   link_directories("${MPI_ROOT}/lib")
   set(SCALAPACK_LIBRARIES mkl_scalapack_lp64_dll mkl_blacs_lp64_dll)
-  # orderings: PORD and METIS, as in the sequential Windows build. SCOTCH is
-  # left out for now: with the win-64 libscotch/esmumps packages the SCOTCH
-  # ordering corrupts the heap inside dmumps (mumps_scotch_64 path, seen with
-  # code_aster mumps01a/mumps03a RENUM='SCOTCH'); MUMPS then falls back to
-  # another ordering. Revisit together with PT-SCOTCH (needs a scotch rebuild
-  # against impi >= 2021.17).
-  set(MUMPS_ORDERINGS -Dpord -Dmetis)
-  set(ORDERING_LIBRARIES metis)
+  # orderings: PORD, METIS, SCOTCH, plus PT-SCOTCH when the host has it
+  # (-Dptscotch implies -Dscotch; ptesmumps replaces esmumps). Needs a win-64
+  # libscotch with the fixed context.c patch (scotch-feedstock build >= 2):
+  # older builds corrupt the heap in SCOTCH_graphOrder* (int64 value offsets).
+  find_library(PTSCOTCH_LIB ptscotch PATHS "${MPI_ROOT}/lib" NO_DEFAULT_PATH)
+  if(PTSCOTCH_LIB)
+    set(MUMPS_ORDERINGS -Dpord -Dmetis -Dscotch -Dptscotch)
+    set(ORDERING_LIBRARIES ptesmumps ptscotch ptscotcherr scotch metis)
+  else()
+    set(MUMPS_ORDERINGS -Dpord -Dmetis -Dscotch)
+    set(ORDERING_LIBRARIES esmumps scotch scotcherr metis)
+  endif()
   message(STATUS "MUMPS orderings: ${MUMPS_ORDERINGS}")
 elseif(WITH_MPI)
   find_package(MPI REQUIRED)

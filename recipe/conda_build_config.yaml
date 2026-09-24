@@ -10,6 +10,12 @@ scotch_intsize:
   - "32"
   - "64"
 
+# Windows Intel MPI: libptscotch for impi 2021.17 only exists as 7.0.13
+libscotch:     # [win]
+  - 7.0.13     # [win]
+libptscotch:   # [win]
+  - 7.0.13     # [win]
+
 # Fortran ABI marker, following the convention established in
 # https://github.com/conda-forge/flang-activation-feedstock/issues/14
 # (see test-drive, toml-f, mctc-lib, dftd4, ... for prior art).

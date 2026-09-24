@@ -6,10 +6,10 @@ context:
   # Windows MPI = Intel MPI. impi-devel run-exports impi_rt pinned to x.x.x, so
   # it must match the impi_rt the MPI dependencies were built against.
   # 2021.16.x ships no Fortran support (no mpif.h / mpi.mod), so >= 2021.17.
-  # 2021.17.0 is the oldest one with Fortran support and has parallel hdf5
-  # builds (1.14.6 mpi_impi_*_8, 2.1.0 mpi_impi_*_2); see the note on
+  # 2021.17.2 matches the impi_rt of the parallel hdf5 (mpi_impi) builds
+  # used by libmed/medcoupling (win-64 impi variants); see the note on
   # libptscotch below.
-  impi_version: "2021.17.0"
+  impi_version: "2021.17.2"
 
 recipe:
   name: mumps

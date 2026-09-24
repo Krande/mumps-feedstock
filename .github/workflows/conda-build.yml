@@ -238,7 +238,7 @@ jobs:
             resize_partitions: False
             runs_on: ['ubuntu-latest']
             tools_install_dir: ~/miniforge3
-          - CONFIG: win_64_module_abiflangmpinompi
+          - CONFIG: win_64_module_abiflangmpinompiscotch_intsize32
             STORE_BUILD_ARTIFACTS: False
             UPLOAD_PACKAGES: True
             build_platform: win-64
@@ -250,7 +250,7 @@ jobs:
             resize_partitions: False
             runs_on: ['windows-2022']
             tools_install_dir: D:\Miniforge
-          - CONFIG: win_64_module_abiifxmpiimpi
+          - CONFIG: win_64_module_abiifxmpiimpiscotch_intsize64
             STORE_BUILD_ARTIFACTS: False
             UPLOAD_PACKAGES: True
             build_platform: win-64
@@ -262,7 +262,7 @@ jobs:
             resize_partitions: False
             runs_on: ['windows-2022']
             tools_install_dir: D:\Miniforge
-          - CONFIG: win_64_module_abiifxmpinompi
+          - CONFIG: win_64_module_abiifxmpinompiscotch_intsize64
             STORE_BUILD_ARTIFACTS: False
             UPLOAD_PACKAGES: True
             build_platform: win-64

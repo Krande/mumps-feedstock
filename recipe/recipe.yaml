@@ -2,7 +2,7 @@ schema_version: 1
 
 context:
   version: "5.8.2"
-  build_num: 3
+  build_num: 4
 
 recipe:
   name: mumps
@@ -84,11 +84,12 @@ outputs:
       host:
         - libblas
         - liblapack
-        - if: not win
-          then:
-            - metis
-            - libscotch
-            - libscotch * int${{ scotch_intsize }}_*
+        # PORD, METIS and SCOTCH orderings on all platforms (Windows too: without
+        # them MUMPS falls back to AMD/QAMD). Windows needs a libscotch with the
+        # fixed context.c patch (scotch-feedstock, win int64 heap corruption).
+        - metis
+        - libscotch
+        - libscotch * int${{ scotch_intsize }}_*
         # flang needs LLVM OpenMP runtime; ifx needs MKL headers/libs
         - if: win and fortran_compiler == 'flang'
           then:

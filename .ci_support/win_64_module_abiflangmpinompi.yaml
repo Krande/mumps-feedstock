@@ -14,8 +14,11 @@ libblas:
 - 3.9.* *netlib
 liblapack:
 - 3.9.* *netlib
+<<<<<<<< HEAD:.ci_support/win_64_module_abiflangmpinompi.yaml
 libptscotch:
 - 7.0.13
+========
+>>>>>>>> 60a1ce1 (Windows: enable PORD, METIS and SCOTCH orderings in mumps-seq, build 4):.ci_support/win_64_module_abiflangscotch_intsize32.yaml
 libscotch:
 - 7.0.13
 metis:

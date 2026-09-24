@@ -115,6 +115,24 @@ if(NOT WITH_MPI)
   include_directories(${MUMPS_SOURCE_DIR}/libseq)
 endif()
 
+# Orderings: PORD, METIS and SCOTCH, as in the Unix builds
+# (Makefile.conda.SEQ: ORDERINGSF = -Dmetis -Dpord -Dscotch). Without these
+# definitions MUMPS only has AMD/QAMD ("METIS not available. Ordering set to
+# default"), which gives much more fill-in on 3D problems.
+option(WITH_ORDERINGS "PORD, METIS and SCOTCH orderings" ON)
+if(WITH_ORDERINGS AND NOT WITH_MPI)
+  find_path(METIS_INCLUDE_DIR metis.h REQUIRED)
+  find_path(SCOTCH_INCLUDE_DIR scotch.h REQUIRED)
+  find_library(METIS_LIBRARY metis REQUIRED)
+  find_library(ESMUMPS_LIBRARY esmumps REQUIRED)
+  find_library(SCOTCH_LIBRARY scotch REQUIRED)
+  find_library(SCOTCHERR_LIBRARY scotcherr REQUIRED)
+  include_directories(${METIS_INCLUDE_DIR} ${SCOTCH_INCLUDE_DIR})
+  set(MUMPS_ORDERINGS -Dpord -Dmetis -Dscotch)
+  set(ORDERING_LIBRARIES ${ESMUMPS_LIBRARY} ${SCOTCH_LIBRARY} ${SCOTCHERR_LIBRARY} ${METIS_LIBRARY})
+  message(STATUS "MUMPS orderings: ${MUMPS_ORDERINGS} (${ORDERING_LIBRARIES})")
+endif()
+
 # update sources on each release
 # order and section shall match Makefile in MUMPS source
 
@@ -188,6 +206,7 @@ set(
   src/mumps_thread_affinity.c
   src/mumps_flytes.c
   src/mumps_save_restore_C.c
+  src/mumps_sol_omp_memory_manager.c
 )
 
 if(NOT WITH_MPI)
@@ -355,14 +374,14 @@ if(MUMPS_ORDERINGS)
   target_compile_definitions(${ARITHLIB} PRIVATE ${MUMPS_ORDERINGS})
 endif()
 target_link_libraries(${ARITHLIB} mumps_common pord ${ORDERING_LIBRARIES} ${SCALAPACK_LIBRARIES} ${LAPACK_LIBRARIES} ${BLAS_LIBRARIES} ${MPI_WIN_LIBRARIES})
-target_link_libraries(${ARITH}simpletest ${ARITHLIB} mumps_common pord ${LAPACK_LIBRARIES} ${BLAS_LIBRARIES} ${MPI_WIN_LIBRARIES})
+target_link_libraries(${ARITH}simpletest ${ARITHLIB} mumps_common pord ${ORDERING_LIBRARIES} ${LAPACK_LIBRARIES} ${BLAS_LIBRARIES} ${MPI_WIN_LIBRARIES})
 install(TARGETS ${ARITHLIB})
 install(FILES include/${ARITH}mumps_struc.h include/${ARITH}mumps_c.h DESTINATION include)
 
 endforeach(ARITH)
 set(EXAMPLE examples/c_example.c)
 add_executable(c_example ${EXAMPLE})
-target_link_libraries(c_example dmumps mumps_common pord ${LAPACK_LIBRARIES} ${BLAS_LIBRARIES} ${MPI_WIN_LIBRARIES})
+target_link_libraries(c_example dmumps mumps_common pord ${ORDERING_LIBRARIES} ${LAPACK_LIBRARIES} ${BLAS_LIBRARIES} ${MPI_WIN_LIBRARIES})
 install(TARGETS mumps_common pord)
 install(FILES include/mumps_c_types.h include/mumps_compat.h include/mumps_int_def.h DESTINATION include)
 if(NOT WITH_MPI)

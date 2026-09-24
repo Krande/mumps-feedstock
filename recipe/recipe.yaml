@@ -1,8 +1,8 @@
 schema_version: 1
 
 context:
-  version: "5.8.2"
-  build_num: 7
+  version: "5.9.1"
+  build_num: 0
   # Windows MPI = Intel MPI. impi-devel run-exports impi_rt pinned to x.x.x, so
   # it must match the impi_rt the MPI dependencies were built against.
   # 2021.16.x ships no Fortran support (no mpif.h / mpi.mod), so >= 2021.17.
@@ -17,7 +17,7 @@ recipe:
 
 source:
   url: https://mumps-solver.org/MUMPS_${{ version }}.tar.gz
-  sha256: eb515aa688e6dbab414bb6e889ff4c8b23f1691a843c68da5230a33ac4db7039
+  sha256: 659c9b57646b5a003ac618baa1faf9dd2044e46c732b3daaccbc7158003e1b46
   patches:
     - flang-support.patch
     - ifdef-openmp.patch
@@ -91,11 +91,12 @@ outputs:
       host:
         - libblas
         - liblapack
-        - if: not win
-          then:
-            - metis
-            - libscotch
-            - libscotch * int${{ scotch_intsize }}_*
+        # PORD, METIS and SCOTCH orderings on all platforms (Windows too: without
+        # them MUMPS falls back to AMD/QAMD). Windows needs a libscotch with the
+        # fixed context.c patch (scotch-feedstock, win int64 heap corruption).
+        - metis
+        - libscotch
+        - libscotch * int${{ scotch_intsize }}_*
         # flang needs LLVM OpenMP runtime; ifx needs MKL headers/libs
         - if: win and fortran_compiler == 'flang'
           then:

@@ -59,3 +59,8 @@ libblas:  # [win]
 liblapack:  # [win]
   - 3.9.* *netlib  # [win]
   - 3.9.* *mkl  # [win]
+
+# Windows: SCOTCH ordering needs a libscotch with the fixed context.c patch
+# (scotch-feedstock, heap corruption with 64-bit ints); those are 7.0.13 builds
+libscotch:     # [win]
+  - 7.0.13     # [win]

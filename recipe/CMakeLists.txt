@@ -67,6 +67,24 @@ if(NOT WITH_MPI)
   include_directories(${MUMPS_SOURCE_DIR}/libseq)
 endif()
 
+# Orderings: PORD, METIS and SCOTCH, as in the Unix builds
+# (Makefile.conda.SEQ: ORDERINGSF = -Dmetis -Dpord -Dscotch). Without these
+# definitions MUMPS only has AMD/QAMD ("METIS not available. Ordering set to
+# default"), which gives much more fill-in on 3D problems.
+option(WITH_ORDERINGS "PORD, METIS and SCOTCH orderings" ON)
+if(WITH_ORDERINGS AND NOT WITH_MPI)
+  find_path(METIS_INCLUDE_DIR metis.h REQUIRED)
+  find_path(SCOTCH_INCLUDE_DIR scotch.h REQUIRED)
+  find_library(METIS_LIBRARY metis REQUIRED)
+  find_library(ESMUMPS_LIBRARY esmumps REQUIRED)
+  find_library(SCOTCH_LIBRARY scotch REQUIRED)
+  find_library(SCOTCHERR_LIBRARY scotcherr REQUIRED)
+  include_directories(${METIS_INCLUDE_DIR} ${SCOTCH_INCLUDE_DIR})
+  set(MUMPS_ORDERINGS -Dpord -Dmetis -Dscotch)
+  set(ORDERING_LIBRARIES ${ESMUMPS_LIBRARY} ${SCOTCH_LIBRARY} ${SCOTCHERR_LIBRARY} ${METIS_LIBRARY})
+  message(STATUS "MUMPS orderings: ${MUMPS_ORDERINGS} (${ORDERING_LIBRARIES})")
+endif()
+
 # update sources on each release
 # order and section shall match Makefile in MUMPS source
 
@@ -157,6 +175,9 @@ target_compile_definitions(mumps_common PRIVATE -DAdd_)
 # Hack to fix incorrect assumption that Windows=gfortran
 target_compile_definitions(mumps_common PRIVATE -DMUMPS_CALL=__declspec\(dllexport\))
 target_compile_definitions(mumps_common PRIVATE -DLIBSEQ_CALL=__declspec\(dllexport\))
+if(MUMPS_ORDERINGS)
+  target_compile_definitions(mumps_common PRIVATE ${MUMPS_ORDERINGS})
+endif()
 
 set(PORD_SOURCES
 PORD/lib/graph.c
@@ -301,15 +322,18 @@ target_compile_definitions(${ARITHLIB} PUBLIC MUMPS_ARITH=MUMPS_ARITH_${ARITH})
 target_compile_definitions(${ARITHLIB} PRIVATE -DAdd_)
 target_compile_definitions(${ARITHLIB} PRIVATE -DMUMPS_CALL=__declspec\(dllexport\))
 add_executable(${ARITH}simpletest ${EXAMPLE})
-target_link_libraries(${ARITHLIB} mumps_common pord ${LAPACK_LIBRARIES} ${BLAS_LIBRARIES})
-target_link_libraries(${ARITH}simpletest ${ARITHLIB} mumps_common pord ${LAPACK_LIBRARIES} ${BLAS_LIBRARIES})
+if(MUMPS_ORDERINGS)
+  target_compile_definitions(${ARITHLIB} PRIVATE ${MUMPS_ORDERINGS})
+endif()
+target_link_libraries(${ARITHLIB} mumps_common pord ${ORDERING_LIBRARIES} ${LAPACK_LIBRARIES} ${BLAS_LIBRARIES})
+target_link_libraries(${ARITH}simpletest ${ARITHLIB} mumps_common pord ${ORDERING_LIBRARIES} ${LAPACK_LIBRARIES} ${BLAS_LIBRARIES})
 install(TARGETS ${ARITHLIB})
 install(FILES include/${ARITH}mumps_struc.h include/${ARITH}mumps_c.h DESTINATION include)
 
 endforeach(ARITH)
 set(EXAMPLE examples/c_example.c)
 add_executable(c_example ${EXAMPLE})
-target_link_libraries(c_example dmumps mumps_common pord ${LAPACK_LIBRARIES} ${BLAS_LIBRARIES})
+target_link_libraries(c_example dmumps mumps_common pord ${ORDERING_LIBRARIES} ${LAPACK_LIBRARIES} ${BLAS_LIBRARIES})
 install(TARGETS mumps_common pord)
 install(FILES include/mumps_c_types.h include/mumps_compat.h include/mumps_int_def.h DESTINATION include)
 if(NOT WITH_MPI)

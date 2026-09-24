@@ -87,11 +87,16 @@ outputs:
       host:
         - libblas
         - liblapack
-        - if: not win
-          then:
-            - metis
-            - libscotch
-            - libscotch * int${{ scotch_intsize }}_*
+        # PORD, METIS and SCOTCH orderings on all platforms (Windows too: without
+        # them MUMPS falls back to AMD/QAMD). Windows needs a libscotch with the
+        # fixed context.c patch (scotch-feedstock, win int64 heap corruption).
+        - metis
+        - libscotch
+        - libscotch * int${{ scotch_intsize }}_*
+        # the first win-64 libscotch 7.0.13 builds with the fixed context.c patch
+        # (adjust to the build number the scotch-feedstock fix is released with)
+        - if: win
+          then: libscotch[build_number='>=2']
         # flang needs LLVM OpenMP runtime; ifx needs MKL headers/libs
         - if: win and fortran_compiler == 'flang'
           then:

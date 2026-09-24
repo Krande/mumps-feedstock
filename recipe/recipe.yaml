@@ -21,6 +21,9 @@ source:
   patches:
     - flang-support.patch
     - ifdef-openmp.patch
+    # 5.9.x: MSVC rejects __declspec(dllexport) (MUMPS_CALL on Windows) after a
+    # pointer return type; the two helpers are internal, drop MUMPS_CALL there
+    - msvc-flytes-const-char-mumps-call.patch
 
 build:
   number: ${{ build_num }}

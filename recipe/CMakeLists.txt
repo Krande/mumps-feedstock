@@ -35,7 +35,55 @@ endif()
 
 # -DWITH_MPI
 option(WITH_MPI "for parallel environment with MPI" OFF)
-if(WITH_MPI)
+if(WITH_MPI AND WIN32)
+  # Windows: Intel MPI (conda impi-devel) + MKL ScaLAPACK/BLACS, wired up by
+  # hand: FindMPI needs MPI_CXX here (not a project language) and does not know
+  # the conda layout.
+  #
+  # impi.dll exports the Fortran MPI procedures in every spelling
+  # (mpi_send, mpi_send_, MPI_SEND) but the mpif.h COMMON blocks (MPI_IN_PLACE,
+  # MPI_BOTTOM, ...) only in upper case (MPIPRIV1, ...). With
+  # /names:lowercase /assume:underscore ifx references __imp_mpipriv1_, so we
+  # compile against a copy of mpif.h that aliases each COMMON block to its
+  # exported name. MUMPS uses MPI_IN_PLACE heavily.
+  if(NOT MPI_ROOT)
+    set(MPI_ROOT "$ENV{I_MPI_ROOT}")
+  endif()
+  if(NOT EXISTS "${MPI_ROOT}/include/mpif.h")
+    message(FATAL_ERROR "Intel MPI not found (MPI_ROOT=${MPI_ROOT})")
+  endif()
+  set(MPI_ALIAS_INCLUDE "${CMAKE_BINARY_DIR}/mpi_alias_include")
+  file(READ "${MPI_ROOT}/include/mpif.h" _mpif)
+  set(_alias "")
+  foreach(_blk MPIFCMB5 MPIFCMB9 MPIFCMBa MPIPRIV1 MPIPRIV2 MPIPRIVC)
+    string(FIND "${_mpif}" "/${_blk}/" _pos)
+    if(NOT _pos EQUAL -1)
+      string(TOUPPER "${_blk}" _up)
+      string(APPEND _alias "!DEC$ ATTRIBUTES ALIAS:'${_up}' :: /${_blk}/\n")
+    endif()
+  endforeach()
+  file(WRITE "${MPI_ALIAS_INCLUDE}/mpif.h" "${_mpif}\n${_alias}")
+  message(STATUS "Intel MPI: ${MPI_ROOT}; mpif.h COMMON aliases:\n${_alias}")
+  include_directories(BEFORE "${MPI_ALIAS_INCLUDE}")
+  include_directories("${MPI_ROOT}/include")
+  set(MPI_WIN_LIBRARIES "${MPI_ROOT}/lib/impi.lib")
+  # MPI_ROOT is the conda Library prefix: MKL, SCOTCH and METIS live there too
+  link_directories("${MPI_ROOT}/lib")
+  set(SCALAPACK_LIBRARIES mkl_scalapack_lp64_dll mkl_blacs_lp64_dll)
+  # orderings: PORD, METIS, SCOTCH, plus PT-SCOTCH when the host has it
+  # (-Dptscotch implies -Dscotch; ptesmumps replaces esmumps). Needs a win-64
+  # libscotch with the fixed context.c patch (scotch-feedstock build >= 2):
+  # older builds corrupt the heap in SCOTCH_graphOrder* (int64 value offsets).
+  find_library(PTSCOTCH_LIB ptscotch PATHS "${MPI_ROOT}/lib" NO_DEFAULT_PATH)
+  if(PTSCOTCH_LIB)
+    set(MUMPS_ORDERINGS -Dpord -Dmetis -Dscotch -Dptscotch)
+    set(ORDERING_LIBRARIES ptesmumps ptscotch ptscotcherr scotch metis)
+  else()
+    set(MUMPS_ORDERINGS -Dpord -Dmetis -Dscotch)
+    set(ORDERING_LIBRARIES esmumps scotch scotcherr metis)
+  endif()
+  message(STATUS "MUMPS orderings: ${MUMPS_ORDERINGS}")
+elseif(WITH_MPI)
   find_package(MPI REQUIRED)
   if(MPI_Fortran_FOUND AND MPI_CXX_FOUND AND MPI_C_FOUND)
     include_directories(${MPI_C_INCLUDE_PATH})
@@ -325,15 +373,15 @@ add_executable(${ARITH}simpletest ${EXAMPLE})
 if(MUMPS_ORDERINGS)
   target_compile_definitions(${ARITHLIB} PRIVATE ${MUMPS_ORDERINGS})
 endif()
-target_link_libraries(${ARITHLIB} mumps_common pord ${ORDERING_LIBRARIES} ${LAPACK_LIBRARIES} ${BLAS_LIBRARIES})
-target_link_libraries(${ARITH}simpletest ${ARITHLIB} mumps_common pord ${ORDERING_LIBRARIES} ${LAPACK_LIBRARIES} ${BLAS_LIBRARIES})
+target_link_libraries(${ARITHLIB} mumps_common pord ${ORDERING_LIBRARIES} ${SCALAPACK_LIBRARIES} ${LAPACK_LIBRARIES} ${BLAS_LIBRARIES} ${MPI_WIN_LIBRARIES})
+target_link_libraries(${ARITH}simpletest ${ARITHLIB} mumps_common pord ${ORDERING_LIBRARIES} ${LAPACK_LIBRARIES} ${BLAS_LIBRARIES} ${MPI_WIN_LIBRARIES})
 install(TARGETS ${ARITHLIB})
 install(FILES include/${ARITH}mumps_struc.h include/${ARITH}mumps_c.h DESTINATION include)
 
 endforeach(ARITH)
 set(EXAMPLE examples/c_example.c)
 add_executable(c_example ${EXAMPLE})
-target_link_libraries(c_example dmumps mumps_common pord ${ORDERING_LIBRARIES} ${LAPACK_LIBRARIES} ${BLAS_LIBRARIES})
+target_link_libraries(c_example dmumps mumps_common pord ${ORDERING_LIBRARIES} ${LAPACK_LIBRARIES} ${BLAS_LIBRARIES} ${MPI_WIN_LIBRARIES})
 install(TARGETS mumps_common pord)
 install(FILES include/mumps_c_types.h include/mumps_compat.h include/mumps_int_def.h DESTINATION include)
 if(NOT WITH_MPI)

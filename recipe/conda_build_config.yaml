@@ -2,10 +2,20 @@ mpi:
   - nompi
   - mpich  # [not win]
   - openmpi  # [not win]
+  # Windows MPI: Intel MPI (ifx + MKL ScaLAPACK/BLACS). Only the ifx module_abi
+  # is built with it (see skip in recipe.yaml).
+  - impi  # [win]
 
 scotch_intsize:
   - "32"
   - "64"
+
+# Windows: libptscotch for impi 2021.17 only exists as 7.0.13, and the SCOTCH
+# orderings need the libscotch builds with the fixed context.c patch (7.0.13)
+libscotch:     # [win]
+  - 7.0.13     # [win]
+libptscotch:   # [win]
+  - 7.0.13     # [win]
 
 # Fortran ABI marker, following the convention established in
 # https://github.com/conda-forge/flang-activation-feedstock/issues/14
@@ -59,8 +69,3 @@ libblas:  # [win]
 liblapack:  # [win]
   - 3.9.* *netlib  # [win]
   - 3.9.* *mkl  # [win]
-
-# Windows: SCOTCH ordering needs a libscotch with the fixed context.c patch
-# (scotch-feedstock, heap corruption with 64-bit ints); those are 7.0.13 builds
-libscotch:     # [win]
-  - 7.0.13     # [win]

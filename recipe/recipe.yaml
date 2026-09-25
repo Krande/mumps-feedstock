@@ -3,6 +3,13 @@ schema_version: 1
 context:
   version: "5.9.1"
   build_num: 0
+  # Windows MPI = Intel MPI. impi-devel run-exports impi_rt pinned to x.x.x, so
+  # it must match the impi_rt the MPI dependencies were built against.
+  # 2021.16.x ships no Fortran support (no mpif.h / mpi.mod), so >= 2021.17.
+  # 2021.17.2 matches the impi_rt of the parallel hdf5 (mpi_impi) builds
+  # used by libmed/medcoupling (win-64 impi variants); see the note on
+  # libptscotch below.
+  impi_version: "2021.17.2"
 
 recipe:
   name: mumps
@@ -267,7 +274,9 @@ outputs:
   - package:
       name: mumps-mpi
     build:
-      skip: mpi == 'nompi'
+      # Windows: Intel MPI only, and only with ifx (MKL provides ScaLAPACK/BLACS;
+      # there is no netlib ScaLAPACK for flang on win-64)
+      skip: mpi == 'nompi' or (win and (mpi != 'impi' or module_abi != 'ifx'))
       script: build-mumps
       string: ${{ module_abi }}_h${{ hash }}_${{ build_num }}
       # Keep flang the default on Windows. The ifx variant carries the same
@@ -283,7 +292,13 @@ outputs:
         - ${{ compiler('fortran') }}
         - ${{ compiler('c') }}
         - ${{ stdlib('c') }}
-        - make
+        - if: win
+          then:
+            - cmake
+            - ninja
+            - m2-patch
+          else:
+            - make
         - if: osx
           then:
             - llvm-openmp
@@ -297,15 +312,30 @@ outputs:
       host:
         - libblas
         - liblapack
-        - ${{ mpi }}
+        - if: win
+          then:
+            - impi-devel ${{ impi_version }}.*
+            # ScaLAPACK + BLACS (mkl_scalapack_lp64, mkl_blacs_lp64 -> intelmpi)
+            - mkl-devel
+          else:
+            - ${{ mpi }}
+            - parmetis
+            - scalapack
         - metis
-        - parmetis
+        # Windows: SCOTCH + PT-SCOTCH orderings need a win-64 libscotch with
+        # the fixed context.c patch (scotch-feedstock build >= 2; older ones
+        # corrupt the heap in SCOTCH_graphOrder*, see CMakeLists.txt)
         - libptscotch
         - libscotch * int${{ scotch_intsize }}_*
-        - scalapack
         - libscotch
+        - if: win
+          then:
+            - libscotch[build_number='>=2']
+            - libptscotch[build_number='>=2']
       run:
-        - ${{ pin_subpackage('mumps-include', exact=True) }}
+        - if: not win
+          then:
+            - ${{ pin_subpackage('mumps-include', exact=True) }}
       run_exports:
         - ${{ pin_subpackage('mumps-mpi', upper_bound='x.x.x') }}
       run_constraints:
@@ -313,33 +343,58 @@ outputs:
     tests:
       - package_contents:
           files:
-            - lib/pkgconfig/smumps.pc
-            - lib/pkgconfig/dmumps.pc
-            - lib/pkgconfig/cmumps.pc
-            - lib/pkgconfig/zmumps.pc
+            - if: win
+              then:
+                - Library/lib/mumps_common.lib
+                - Library/lib/pord.lib
+                - Library/include/dmumps_struc.h
+              else:
+                - lib/pkgconfig/smumps.pc
+                - lib/pkgconfig/dmumps.pc
+                - lib/pkgconfig/cmumps.pc
+                - lib/pkgconfig/zmumps.pc
           lib:
-            - mumps_common
-            - pord
+            - if: not win
+              then:
+                - mumps_common
+                - pord
             - smumps
             - dmumps
             - cmumps
             - zmumps
-      - script:
-          file: run_test-mpi
-        files:
-          source:
-            - examples/
-        requirements:
-          run:
-            - ${{ compiler("c") }}
-            - ${{ compiler("fortran") }}
-            - make
-            - pkg-config
+      - if: win
+        then:
+          # Fortran consumer with code_aster's flags (/integer-size:64
+          # /names:lowercase /assume:underscore) solving under mpiexec -n 2,
+          # plus the bundled C example. See run_test-mpi.bat.
+          script: run_test-mpi
+          files:
+            source:
+              - examples/
+            recipe:
+              - test_mpi_i8.F90
+          requirements:
+            run:
+              - ${{ compiler("c") }}
+              - ${{ stdlib("c") }}
+              - ${{ compiler("fortran") }}
+              - impi-devel ${{ impi_version }}.*
+        else:
+          script: run_test-mpi
+          files:
+            source:
+              - examples/
+          requirements:
+            run:
+              - ${{ compiler("c") }}
+              - ${{ compiler("fortran") }}
+              - make
+              - pkg-config
 
   - package:
       name: mumps-mpi-fortran-devel
     build:
-      skip: mpi == 'nompi'
+      skip: mpi == 'nompi' or (win and (mpi != 'impi' or module_abi != 'ifx'))
       string: ${{ module_abi }}_h${{ hash }}_${{ build_num }}
       variant:
         # scotch_intsize is irrelevant to the ABI marker itself, but keeping it

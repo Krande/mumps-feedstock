@@ -103,7 +103,7 @@ outputs:
         # the first win-64 libscotch 7.0.13 builds with the fixed context.c patch
         # (adjust to the build number the scotch-feedstock fix is released with)
         - if: win
-          then: libscotch[build_number='>=2']
+          then: libscotch[build_number='>=1']
         # flang needs LLVM OpenMP runtime; ifx needs MKL headers/libs
         - if: win and fortran_compiler == 'flang'
           then:
@@ -330,8 +330,8 @@ outputs:
         - libscotch
         - if: win
           then:
-            - libscotch[build_number='>=2']
-            - libptscotch[build_number='>=2']
+            - libscotch[build_number='>=1']
+            - libptscotch[build_number='>=1']
       run:
         - if: not win
           then:

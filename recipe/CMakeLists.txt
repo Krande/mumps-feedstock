@@ -140,6 +140,7 @@ set(
   src/mumps_thread_affinity.c
   src/mumps_flytes.c
   src/mumps_save_restore_C.c
+  src/mumps_sol_omp_memory_manager.c
 )
 
 if(NOT WITH_MPI)

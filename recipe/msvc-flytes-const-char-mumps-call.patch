@@ -1,0 +1,37 @@
+diff --git a/src/mumps_flytes.h b/src/mumps_flytes.h
+index bf327d0..47b3ecb 100644
+--- a/src/mumps_flytes.h
++++ b/src/mumps_flytes.h
+@@ -204,8 +204,8 @@ MUMPS_INLINE void MUMPS_CALL compress_vector_double_float(  const uint8_t nb_byt
+ MUMPS_INLINE void MUMPS_CALL decompress_vector_double_float(const uint8_t nb_bytes, const uint8_t* const in, double* const out, const MUMPS_INT length);
+ MUMPS_INLINE void MUMPS_CALL compress_vector_float(         const uint8_t nb_bytes, const float* const in, uint8_t*  const out, const MUMPS_INT length);
+ MUMPS_INLINE void MUMPS_CALL decompress_vector_float(       const uint8_t nb_bytes, const uint8_t* const in, float*  const out, const MUMPS_INT length);
+-MUMPS_INLINE const char* MUMPS_CALL get_compress_permutation(   const uint8_t nb_bytes);
+-MUMPS_INLINE const char* MUMPS_CALL get_decompress_permutation( const uint8_t nb_bytes);
++MUMPS_INLINE const char* get_compress_permutation(   const uint8_t nb_bytes);
++MUMPS_INLINE const char* get_decompress_permutation( const uint8_t nb_bytes);
+ #if defined(__AVX512F__)
+ MUMPS_INLINE __mmask64 MUMPS_CALL build_zero_mask(      const uint8_t nb_bytes);
+ MUMPS_INLINE __mmask64 MUMPS_CALL build_zero_mask_float(const uint8_t nb_bytes);
+diff --git a/src/mumps_flytes.c b/src/mumps_flytes.c
+index 79a4927..ac49d9e 100644
+--- a/src/mumps_flytes.c
++++ b/src/mumps_flytes.c
+@@ -458,7 +458,7 @@ MUMPS_INLINE void MUMPS_CALL decompress_vector_float(const uint8_t nb_bytes,
+ 	}
+ }
+ #if defined(__AVX512VBMI__)
+-MUMPS_INLINE const char* MUMPS_CALL get_compress_permutation(const uint8_t nb_bytes) {
++MUMPS_INLINE const char* get_compress_permutation(const uint8_t nb_bytes) {
+ 	const char* p = NULL;
+ 	switch (nb_bytes) {
+ 		case 7:
+@@ -479,7 +479,7 @@ MUMPS_INLINE const char* MUMPS_CALL get_compress_permutation(const uint8_t nb_by
+ 	}
+ 	return p;
+ } 
+-MUMPS_INLINE const char* MUMPS_CALL get_decompress_permutation(const uint8_t nb_bytes) {
++MUMPS_INLINE const char* get_decompress_permutation(const uint8_t nb_bytes) {
+ 	const char* p = NULL;
+ 	switch (nb_bytes) {
+ 		case 7:
